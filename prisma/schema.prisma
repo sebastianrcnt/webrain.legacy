@@ -1,11 +1,33 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
+generator client {
+  provider = "prisma-client-js"
+}
 
 datasource db {
-  provider = "postgresql"
+  provider = "sqlite"
   url      = env("DATABASE_URL")
 }
 
-generator client {
-  provider = "prisma-client-js"
+model Project {
+  id          String  @default("unset") @id
+  description String?
+  agreement   String?
+  public      Int     @default(0)
+}
+
+model Experiment {
+  id          String  @default("unset") @id
+  userEmail   String?
+  name        String  @default("unset")
+  description String?
+  fileId      String  @default("unset")
+  User        User?   @relation(fields: [userEmail], references: [email])
+}
+
+model User {
+  email      String       @default("unset@monet.com") @id
+  name       String       @default("unset")
+  phone      String?
+  password   String?      @default("unset")
+  level      Int          @default(0)
+  Experiment Experiment[]
 }
