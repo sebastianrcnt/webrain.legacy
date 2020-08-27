@@ -1,0 +1,40 @@
+<header class="main-header">
+  <div class="logo">
+    <h1>
+      <a href="/">MoNET <span class="name">WeBrain</span></a>
+    </h1>
+  </div>
+  <a class="mobile-only mobile-menu-trigger">
+    <i class="fas fa-bars"></i>
+  </a>
+  <nav class="menu-wrap">
+    <ul class="sub-menu">
+      <% if (user) { %>
+      <li style="font-size: 1rem; font-weight: 300; color: white;">
+        <%- user ? user.name : null %>님 반갑습니다.
+      </li>
+      <% } %>
+      <li>
+        <% if (user) { %>
+        <a style="font-size: 1rem; font-weight: 300;" href="/api/users/logout"
+          >로그아웃</a
+        >
+        <% } else { %>
+        <a style="font-size: 1rem; font-weight: 300;" href="/pages/login"
+          >로그인</a
+        >
+        <% } %>
+      </li>
+    </ul>
+    <ul class="main-menu">
+      <li>
+        <a href="/pages/list">실험참여</a>
+      </li>
+      <% if (user.typeId < 3) { %>
+      <li>
+        <a href="/pages/list">관리자 페이지로 이동</a>
+      </li>
+      <% } %>
+    </ul>
+  </nav>
+</header>

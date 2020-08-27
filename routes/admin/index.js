@@ -3,7 +3,7 @@ const AdminRouter = express.Router();
 
 AdminRouter.use('/:name', (req, res) => {
   const name = req.params.name;
-  res.render(`admin/${name}`)
+  res.render(`admin/pages/${name}`)
 });
 
 module.exports = AdminRouter;

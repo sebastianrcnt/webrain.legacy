@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-  <% include ./partials/head %>
+  <% include ../partials/head %>
   <body>
-    <% include ./partials/navbar %>
+    <% include ../partials/navbar %>
     <div class="px-3">
       <section>
         <!-- Project -->
@@ -15,15 +15,15 @@
               <tr>
                 <th>ID</th>
                 <th>이름</th>
-                <th>연구자</th>
+                <th>소유자</th>
                 <th>액션</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody class="is-vcentered">
               <tr>
                 <td>AB123123</td>
+                <td>The Experiment 1</td>
                 <td>정시원(test@monet.com)</td>
-                <td>The Project</td>
                 <td>
                   <a href="" class="button is-info is-small is-centered">
                     <i class="fa fa-edit mr-1"></i>수정
@@ -35,8 +35,8 @@
               </tr>
             </tbody>
             <tfoot>
-              <a href="/admin/project" class="button is-primary is-pulled-right mr-2 mb-6">
-                새로운 프로젝트
+              <a href="/admin/experiment" class="button is-primary is-pulled-right mr-2 mb-6">
+                새로운 실험
               </a>
             </tfoot>
           </table>
