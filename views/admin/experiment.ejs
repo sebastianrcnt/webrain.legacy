@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <% include ./partials/head %>
+  <body>
+    <% include ./partials/navbar %>
+    <div class="px-3 pb-6">
+      <div class="container">
+        <h1 class="title">실험 수정</h1>
+        <form action="">
+          <div class="columns">
+            <label for="name" class="column">
+              실험 ID
+              <input type="text" class="input" name="name" id="" disabled />
+            </label>
+            <label for="name" class="column">
+              실험명
+              <input type="text" class="input" name="name" id="" />
+            </label>
+          </div>
+          <div class="columns">
+            <label for="" class="column is-desktop">
+              실험 설명
+              <textarea class="textarea"></textarea>
+            </label>
+          </div>
+          <div class="columns">
+            <label for="" class="column is-desktop">
+              연구 동의서
+              <textarea class="textarea"> </textarea>
+            </label>
+          </div>
+          <h2>등록된 실험</h2>
+          <!-- 모달 끝 -->
+          <button class="button is-success is-pulled-right">저장하기</button>
+        </form>
+      </div>
+    </div>
+  </body>
+  <script>
+    $(document).ready(() => {
+      $("#search-experiments").DataTable();
+    });
+  </script>
+</html>
