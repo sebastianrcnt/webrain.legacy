@@ -19,10 +19,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/admin/:name', (req, res) => {
-  const name = req.params.name;
-  res.render(`admin/${name}`)
-});
 // app.use('/users', usersRouter);
 
 // catch 404 and forward to error handler
