@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+  <% include ./partials/head %>
+  <body>
+    <% include ./partials/navbar %>
+    <div class="px-3 pb-6">
+      <div class="container">
+        <h1 class="title">프로젝트 수정</h1>
+        <form action="">
+          <div class="columns">
+            <label for="name" class="column">
+              프로젝트명
+              <input type="text" class="input" name="name" id="" />
+            </label>
+          </div>
+          <div class="columns">
+            <label for="" class="column is-desktop">
+              프로젝트 설명
+              <textarea class="textarea"></textarea>
+            </label>
+          </div>
+          <div class="columns">
+            <label for="" class="column is-desktop">
+              연구 동의서
+              <textarea class="textarea"> </textarea>
+            </label>
+          </div>
+          <h2>등록된 실험</h2>
+          <button
+            type="button"
+            class="button is-pulled-right mb-5 is-primary"
+            onclick="$('#search-experiments-modal').addClass('is-active')"
+          >
+            새로운 연구 추가
+          </button>
+          <!-- 새로운 연구 추가 모달 -->
+          <!-- 모달 끝 -->
+          <table
+            class="table is-bordered is-hoverable is-fullwidth has-text-centered"
+            id="experiments-table"
+          >
+            <thead>
+              <tr>
+                <th>순서</th>
+                <th>실험 ID</th>
+                <th>실험명</th>
+                <th>액션</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1</td>
+                <td>AB123123</td>
+                <td>실험1</td>
+                <td>
+                  <a href="" class="button is-small is-danger">삭제</a>
+                  <a href="" class="button is-small">
+                    <i class="fa fa-chevron-up"></i>
+                  </a>
+                  <a href="" class="button is-small">
+                    <i class="fa fa-chevron-down"></i>
+                  </a>
+                </td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>AB123123</td>
+                <td>실험2</td>
+                <td>
+                  <a href="" class="button is-small is-danger">삭제</a>
+                  <a href="" class="button is-small">
+                    <i class="fa fa-chevron-up"></i>
+                  </a>
+                  <a href="" class="button is-small">
+                    <i class="fa fa-chevron-down"></i>
+                  </a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <h2>공개여부</h2>
+          <div class="select">
+            <select name="" id="">
+              <option value="true">공개</option>
+              <option value="true">비공개</option>
+            </select>
+          </div>
+
+  
+          <div class="row mt-3">
+            <button class="button is-success is-pulled-right">저장하기</button>
+          </div>
+          
+        </form>
+        <!-- 모달 -->
+        <div class="modal" id="search-experiments-modal">
+          <div class="modal-background"></div>
+          <div class="modal-card">
+            <header class="modal-card-head">
+              <p class="modal-card-title">추가할 실험을 선택하세요</p>
+              <button
+                class="delete"
+                aria-label="close"
+                onclick="$('#search-experiments-modal').removeClass('is-active')"
+              ></button>
+            </header>
+            <section class="modal-card-body">
+              <table class="table is-fullwidth" id="search-experiments">
+                <thead>
+                  <tr>
+                    <th>실험ID</th>
+                    <th>실험명</th>
+                  </tr>
+                </thead>
+                <tbody class="has-text-centered">
+                  <tr class="is-selected">
+                    <td>1111</td>
+                    <td>실험1</td>
+                  </tr>
+                  <tr>
+                    <td>2222</td>
+                    <td>실험2</td>
+                  </tr>
+                </tbody>
+              </table>
+            </section>
+            <footer class="modal-card-foot">
+              <button class="button is-success">추가하기</button>
+              <button
+                class="button"
+                onclick="$('#search-experiments-modal').removeClass('is-active')"
+              >
+                취소
+              </button>
+            </footer>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script>
+    $(document).ready(() => {
+      $("#search-experiments").DataTable();
+    });
+  </script>
+</html>
