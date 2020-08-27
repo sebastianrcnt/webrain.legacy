@@ -8,19 +8,21 @@ datasource db {
 }
 
 model Project {
-  id          String  @default("unset") @id
+  id          String   @default("unset") @id
   description String?
   agreement   String?
-  public      Int     @default(0)
+  public      Int      @default(0)
+  Result      Result[]
 }
 
 model Experiment {
-  id          String  @default("unset") @id
+  id          String   @default("unset") @id
   userEmail   String?
-  name        String  @default("unset")
+  name        String   @default("unset")
   description String?
-  fileId      String  @default("unset")
-  User        User?   @relation(fields: [userEmail], references: [email])
+  fileId      String   @default("unset")
+  User        User?    @relation(fields: [userEmail], references: [email])
+  Result      Result[]
 }
 
 model User {
@@ -30,4 +32,14 @@ model User {
   password   String?      @default("unset")
   level      Int          @default(0)
   Experiment Experiment[]
+}
+
+model Result {
+  experimentId String?
+  projectId    String?
+  json         String?     @default("{}") @unique
+  timestamp    String?
+  id           Int         @default(autoincrement()) @id
+  Experiment   Experiment? @relation(fields: [experimentId], references: [id])
+  Project      Project?    @relation(fields: [projectId], references: [id])
 }
