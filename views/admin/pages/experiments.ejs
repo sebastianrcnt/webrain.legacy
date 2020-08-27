@@ -20,22 +20,29 @@
               </tr>
             </thead>
             <tbody class="is-vcentered">
+              <% for( let experiment in experiments ) { %> <% const {id, name,
+              userEmail } = experiments; %>
               <tr>
-                <td>AB123123</td>
-                <td>The Experiment 1</td>
-                <td>정시원(test@monet.com)</td>
+                <td><%= id %> </td>
+                <td><%= name %> </td>
+                <td><%= userEmail %> </td>
+                <!-- TODO: userEmail 에서 사용자명(email)로 변경 -->
                 <td>
                   <a href="" class="button is-info is-small is-centered">
                     <i class="fa fa-edit mr-1"></i>수정
                   </a>
-                  <a href="" class="button  is-small is-centered is-danger">
+                  <a href="" class="button is-small is-centered is-danger">
                     <i class="fa fa-minus-circle mr-1"></i>삭제
                   </a>
                 </td>
               </tr>
+              <% } %>
             </tbody>
             <tfoot>
-              <a href="/admin/experiment" class="button is-primary is-pulled-right mr-2 mb-6">
+              <a
+                href="/admin/experiment"
+                class="button is-primary is-pulled-right mr-2 mb-6"
+              >
                 새로운 실험
               </a>
             </tfoot>
