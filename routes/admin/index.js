@@ -14,6 +14,7 @@ const {
   experimentsContextProvider,
 } = require("../../providers");
 
+// Pages
 AdminRouter.get("/login", render("admin/pages/login"));
 AdminRouter.get(
   "/experiments",
