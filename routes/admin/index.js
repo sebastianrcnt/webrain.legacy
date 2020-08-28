@@ -14,21 +14,21 @@ const {
 } = require("../../providers");
 
 // Pages
-AdminRouter.get("/login", render("admin/pages/login"));
-AdminRouter.get(
-  "/experiments",
-  LevelRestrictor(RESEARCHER),
-  usersContextProvider(),
-  experimentsContextProvider(),
-  render("admin/pages/experiments")
-);
-
-AdminRouter.get(
-  "/experiments/:id",
-  experimentContextProvider(),
-  usersContextProvider(),
-  render("admin/pages/experiment")
-);
+AdminRouter.get("/login", render("admin/pages/login"))
+  .get(
+    "/experiments",
+    LevelRestrictor(RESEARCHER),
+    usersContextProvider(),
+    experimentsContextProvider(),
+    render("admin/pages/experiments")
+  )
+  .get("/experiments/create", render("admin/pages/experiment-create"))
+  .get(
+    "/experiments/:id",
+    experimentContextProvider(),
+    usersContextProvider(),
+    render("admin/pages/experiment")
+  );
 
 // Actions
 AdminRouter.post("/login", loginAndSignToken);
