@@ -26,6 +26,7 @@ AdminRouter.get(
 AdminRouter.get(
   "/experiments/:id",
   experimentContextProvider(),
+  usersContextProvider(),
   render("admin/pages/experiment")
 );
 

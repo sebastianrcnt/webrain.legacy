@@ -5,38 +5,53 @@
     <% include ../partials/navbar %>
     <div class="px-3 pb-6">
       <div class="container">
-        <h1 class="title">실험 수정</h1>
+        <h1 class="title">실험 생성/수정</h1>
         <form action="">
           <div class="columns">
             <label for="name" class="column">
               실험 ID
-              <input type="text" class="input" name="name" id="" disabled />
+              <input
+                type="text"
+                class="input"
+                name="name"
+                id=""
+                value="<%= experiment.id %> "
+                disabled
+              />
             </label>
           </div>
 
           <div class="columns">
             <label for="name" class="column">
               소유자
-              <input type="text" class="input" name="name" id="" disabled />
+              <input
+                type="text"
+                class="input"
+                name="name"
+                id=""
+                value="<%= users.find((user) => user.email === experiment.userEmail).name %>(<%= user.email %>)"
+                disabled
+              />
             </label>
           </div>
 
           <div class="columns">
             <label for="name" class="column">
               실험명
-              <input type="text" class="input" name="name" id="" />
+              <input type="text" class="input" name="name" value="<%= experiment.name %>" id="" />
             </label>
           </div>
           <div class="columns">
             <label for="" class="column is-desktop">
               실험 설명
-              <textarea class="textarea"></textarea>
+              <textarea class="textarea"><%= experiment.description %></textarea>
             </label>
           </div>
           <div class="columns">
             <label for="" class="column is-desktop">
               실험 링크
               <input class="input" type="text" disabled value="hello world" />
+              <!-- TODO: ADD 실험 링크 -->
             </label>
           </div>
           <div>실험파일 업로드</div>
@@ -56,6 +71,7 @@
           </div>
           <!-- 모달 끝 -->
           <button class="button is-success is-pulled-right">저장하기</button>
+          <button class="button is-danger is-pulled-right mr-2">삭제하기</button>
         </form>
       </div>
     </div>
