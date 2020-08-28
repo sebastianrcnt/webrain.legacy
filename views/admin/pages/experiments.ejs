@@ -20,13 +20,11 @@
               </tr>
             </thead>
             <tbody class="is-vcentered">
-              <% for( let experiment in experiments ) { %> <% const {id, name,
-              userEmail } = experiments; %>
+              <% for( let experiment of experiments ) { %>
               <tr>
-                <td><%= id %> </td>
-                <td><%= name %> </td>
-                <td><%= userEmail %> </td>
-                <!-- TODO: userEmail 에서 사용자명(email)로 변경 -->
+                <td><%= experiment.id %> </td>
+                <td><%= experiment.name %> </td>
+                <td><%= users.find(user => user.email === experiment.userEmail).name %>(<%= experiment.userEmail %> ) </td>
                 <td>
                   <a href="" class="button is-info is-small is-centered">
                     <i class="fa fa-edit mr-1"></i>수정
