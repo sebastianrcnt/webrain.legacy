@@ -1,8 +1,6 @@
 const express = require("express");
 const AdminRouter = express.Router();
-const {
-  LevelRestrictor,
-} = require("../../middlewares/filter-access");
+const { LevelRestrictor } = require("../../middlewares/filter-access");
 const { RESEARCHER } = require("../../levels/levels");
 const {
   loginAndSignToken,
@@ -12,6 +10,7 @@ const render = require("../../controllers/render");
 const {
   usersContextProvider,
   experimentsContextProvider,
+  experimentContextProvider,
 } = require("../../providers");
 
 // Pages
@@ -22,6 +21,12 @@ AdminRouter.get(
   usersContextProvider(),
   experimentsContextProvider(),
   render("admin/pages/experiments")
+);
+
+AdminRouter.get(
+  "/experiments/:id",
+  experimentContextProvider(),
+  render("admin/pages/experiment")
 );
 
 // Actions
