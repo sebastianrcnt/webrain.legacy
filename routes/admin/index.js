@@ -36,19 +36,24 @@ AdminRouter.get("/login", RenderControllers.render("admin/pages/login"))
   .post("/register", UserControllers.createUser)
   .post("/login", UserControllers.loginAndSignToken);
 
-AdminRouter.get("/users", RenderControllers.render("admin/pages/users")).get(
-  "/users/:email",
-  LevelRestrictor(200),
-  ContextProviders.userContextProviderByEmail(),
-  RenderControllers.render("admin/pages/user")
-).post('/users/:email', LevelRestrictor(200), (req, res, next) => {
-  prisma.user.update({
-    where: { email: req.params.email },
-    data: { ...req.body, level: +req.body.level },
-  }).then(user => {
-    res.render('utils/message', { message: "성공적으로 수정되었습니다." })
-  }).catch(respondWithError)
-})
+AdminRouter.get("/users", RenderControllers.render("admin/pages/users"))
+  .get(
+    "/users/:email",
+    LevelRestrictor(200),
+    ContextProviders.userContextProviderByEmail(),
+    RenderControllers.render("admin/pages/user")
+  )
+  .post("/users/:email", LevelRestrictor(200), (req, res, next) => {
+    prisma.user
+      .update({
+        where: { email: req.params.email },
+        data: { ...req.body, level: +req.body.level },
+      })
+      .then((user) => {
+        res.render("utils/message", { message: "성공적으로 수정되었습니다." });
+      })
+      .catch(respondWithError);
+  });
 
 AdminRouter.get(
   "/experiments",
@@ -81,6 +86,16 @@ AdminRouter.get(
         });
       })
       .catch(respondWithError);
+  })
+  .delete("/experiments/:id", LevelRestrictor(100), (req, res, next) => {
+    prisma.experiment
+      .delete({ where: { id: req.params.id } })
+      .then((experiment) => {
+        res.status(200).json("성공적으로 삭제되었습니다")
+      })
+      .catch((err) => {
+        res.status(500).json(err)
+      });
   });
 
 // Actions
