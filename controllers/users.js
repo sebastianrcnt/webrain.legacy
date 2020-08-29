@@ -1,9 +1,10 @@
-const { verifyUser } = require("../services/users");
+const UsersService = require("../services/users");
+const respondWithError = require("../middlewares/error");
 
-exports.loginAndSignToken = async (req, res, next) => {
+const loginAndSignToken = async (req, res, next) => {
   const { email, password } = req.body;
 
-  verifyUser(email, password)
+  UsersService.verifyUser(email, password)
     .then((token) => {
       res.cookie("webrain-token", token);
       res.render("utils/message-with-link", {
@@ -12,23 +13,30 @@ exports.loginAndSignToken = async (req, res, next) => {
         linkname: "관리자 페이지로 이동",
       });
     })
-    .catch((error) => {
-      if (error.intended) {
-        res.status(401).render("utils/message-with-link", {
-          message: error.message,
-          link: "/admin/login",
-          linkname: "로그인 페이지로 이동",
-        });
-      } else {
-        console.error(error);
-        res.status(500).render("utils/message", {
-          message: "알 수 없는 오류가 발생했습니다.", 
-        })
-      }
-    });
+    .catch(respondWithError);
 };
 
-exports.eraseTokenAndRedirectToLogin = async (req, res, next) => {
+const eraseTokenAndRedirectToLogin = async (req, res, next) => {
   res.clearCookie("webrain-token");
   res.redirect("/admin/login");
 };
+
+const createUser = async (req, res, next) => {
+  UsersService.createUser(req.body)
+    .then((user) => {
+      res.render("utils/message-with-link", {
+        message: "회원가입이 완료되었습니다.",
+        link: "/admin/projects",
+        linkname: "대시보드로 이동",
+      });
+    })
+    .catch(respondWithError);
+};
+
+const UserControllers = {
+  loginAndSignToken,
+  eraseTokenAndRedirectToLogin,
+  createUser,
+};
+
+module.exports = UserControllers;
