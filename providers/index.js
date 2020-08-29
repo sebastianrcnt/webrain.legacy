@@ -18,8 +18,10 @@ exports.userContextProviderByEmail = () => async (req, res, next) => {
       req.context.user = user;
       next();
     } else {
-      res.render('utils/message', {
-        message: "존재하지 않거나 삭제된 유저입니다"
+      res.render('utils/message-with-link', {
+        message: "존재하지 않거나 삭제된 유저입니다",
+        link: "javascript:history.back()",
+        linkname: "뒤로가기",
       })
     }
   }).catch(respondWithError);
@@ -47,6 +49,8 @@ exports.experimentContextProviderById = () => async (req, res, next) => {
       } else {
         res.render("utils/message", {
           message: "존재하지 않거나 삭제된 실험입니다.",
+          link: "javascript:history.back()",
+          linkname: "뒤로가기",
         });
       }
     })

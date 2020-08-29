@@ -4,8 +4,8 @@ const PublicRestrictor = () => (req, res, next) => {
   } else {
     res.render("utils/message-with-link", {
       message: "허가되지 않은 접근입니다.",
-      link: "/admin/login",
-      linkname: "로그인 페이지로 돌아가기",
+      link: "javascript:history.back()",
+      linkname: "뒤로가기"
     });
   }
 };
@@ -19,8 +19,8 @@ const LevelRestrictor = (level) => (req, res, next) => {
   } else {
     res.render("utils/message-with-link", {
       message: "허가되지 않은 접근입니다.",
-      link: "/admin/login",
-      linkname: "로그인 페이지로 돌아가기",
+      link: "javascript:history.back()",
+      linkname: "뒤로가기",
     });
   }
 };
