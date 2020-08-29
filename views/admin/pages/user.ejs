@@ -6,7 +6,7 @@
     <div class="px-3 pb-6">
       <div class="container">
         <h1 class="title">유저 상세</h1>
-        <form action="">
+        <form action="/admin/users/<%= user.email %>" method="POST">
           <div class="columns">
             <label for="name" class="column">
               이름
@@ -26,7 +26,7 @@
               <input
                 type="email"
                 class="input"
-                name="name"
+                name="email"
                 id=""
                 value="<%= user.email %>"
                 disabled
@@ -39,7 +39,7 @@
               <input
                 type="phone"
                 class="input"
-                name="name"
+                name="phone"
                 id=""
                 value="<%= user.phone %>"
                 disabled
@@ -49,8 +49,7 @@
           <h3>권한 설정</h3>
           <div class="select">
             <select
-              name=""
-              id=""
+              name="level"
               >
               <% const levelValue = Math.min(parseInt(user.level/100)*100, 200) %>
               <% const options = [{name: '실험대상자', value: 0}, {name:
@@ -61,52 +60,9 @@
             </select>
           </div>
           <div class="row mt-3">
-            <button class="button is-success is-pulled-right">저장하기</button>
+            <button type="submit" class="button is-success is-pulled-right">저장하기</button>
           </div>
         </form>
-        <!-- 모달 -->
-        <div class="modal" id="search-experiments-modal">
-          <div class="modal-background"></div>
-          <div class="modal-card">
-            <header class="modal-card-head">
-              <p class="modal-card-title">추가할 실험을 선택하세요</p>
-              <button
-                class="delete"
-                aria-label="close"
-                onclick="$('#search-experiments-modal').removeClass('is-active')"
-              ></button>
-            </header>
-            <section class="modal-card-body">
-              <table class="table is-fullwidth" id="search-experiments">
-                <thead>
-                  <tr>
-                    <th>실험ID</th>
-                    <th>실험명</th>
-                  </tr>
-                </thead>
-                <tbody class="has-text-centered">
-                  <tr class="is-selected">
-                    <td>1111</td>
-                    <td>실험1</td>
-                  </tr>
-                  <tr>
-                    <td>2222</td>
-                    <td>실험2</td>
-                  </tr>
-                </tbody>
-              </table>
-            </section>
-            <footer class="modal-card-foot">
-              <button class="button is-success">추가하기</button>
-              <button
-                class="button"
-                onclick="$('#search-experiments-modal').removeClass('is-active')"
-              >
-                취소
-              </button>
-            </footer>
-          </div>
-        </div>
       </div>
     </div>
   </body>
