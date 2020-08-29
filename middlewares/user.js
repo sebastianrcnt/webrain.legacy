@@ -12,7 +12,7 @@ const identifyUser = () => (req, res, next) => {
         prisma.user.findOne({ where: { email: payload.email } }).then((found) => {
           if (found) {
             req.user = found;
-            req.context.user = found;
+            req.context.loggedInUser = found;
             next()
           } else {
             next();
