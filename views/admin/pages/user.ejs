@@ -9,34 +9,55 @@
         <form action="">
           <div class="columns">
             <label for="name" class="column">
-              ID
-              <input type="text" class="input" name="name" id="" disabled />
-            </label>
-          </div>
-          <div class="columns">
-            <label for="name" class="column">
               이름
-              <input type="text" class="input" name="name" id="" />
+              <input
+                type="text"
+                class="input"
+                name="name"
+                id=""
+                value="<%= user.name %>"
+                disabled
+              />
             </label>
           </div>
           <div class="columns">
             <label for="name" class="column">
               이메일
-              <input type="email" class="input" name="name" id="" disabled />
+              <input
+                type="email"
+                class="input"
+                name="name"
+                id=""
+                value="<%= user.email %>"
+                disabled
+              />
             </label>
           </div>
           <div class="columns">
             <label for="name" class="column">
               전화번호
-              <input type="phone" class="input" name="name" id="" disabled />
+              <input
+                type="phone"
+                class="input"
+                name="name"
+                id=""
+                value="<%= user.phone %>"
+                disabled
+              />
             </label>
           </div>
           <h3>권한 설정</h3>
           <div class="select">
-            <select name="" id="">
-              <option value="">관리자</option>
-              <option value="">연구자</option>
-              <option value="">실험대상자</option>
+            <select
+              name=""
+              id=""
+              >
+              <% const levelValue = Math.min(parseInt(user.level/100)*100, 200) %>
+              <% const options = [{name: '실험대상자', value: 0}, {name:
+              '연구자', value: 100}, {name: '관리자', value: 200}];%> <% for( let
+              option of options ) { %>
+                <option value="<%= option.value %>" <%= levelValue == option.value ? 'selected' : '' %> ><%= option.name %> </option>
+                <% } %>
             </select>
           </div>
           <div class="row mt-3">

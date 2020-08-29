@@ -13,7 +13,6 @@
           >
             <thead>
               <tr>
-                <th>ID</th>
                 <th>이름</th>
                 <th>이메일</th>
                 <th>등급</th>
@@ -21,17 +20,24 @@
               </tr>
             </thead>
             <tbody class="is-vcentered">
+              <% for( let user of users ) { %>
               <tr>
-                <td>TheUserId</td>
-                <td>정시원</td>
-                <td>test@monet.com</td>
-                <td>연구자</td>
+                <td><%= user.name %></td>
+                <td><%= user.email %></td>
                 <td>
-                  <a href="/admin/user" class="button is-info is-small is-centered">
+                  <%= user.level >=200 ? "관리자" : user.level >=100 ? "연구자"
+                  : "실험대상자" %> (<%= user.level %>)
+                </td>
+                <td>
+                  <a
+                    href="/admin/users/<%= user.email %>"
+                    class="button is-info is-small is-centered"
+                  >
                     <i class="fa fa-edit mr-1"></i>수정
                   </a>
                 </td>
               </tr>
+              <% } %>
             </tbody>
           </table>
         </div>

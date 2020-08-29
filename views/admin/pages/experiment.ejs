@@ -6,7 +6,7 @@
     <div class="px-3 pb-6">
       <div class="container">
         <h1 class="title">실험 상세/수정</h1>
-        <form action="">
+        <form action="/admin/experiments/<%= experiment.id %>" method="POST">
           <div class="columns">
             <label for="name" class="column">
               실험 ID
@@ -15,7 +15,7 @@
                 class="input"
                 name="name"
                 id=""
-                value="<%= experiment.id %> "
+                value="<%- experiment.id %> "
                 disabled
               />
             </label>
@@ -29,7 +29,7 @@
                 class="input"
                 name="name"
                 id=""
-                value="<%= users.find((user) => user.email === experiment.userEmail).name %>(<%= user.email %>)"
+                value="<%- users.find((user) => user.email === experiment.userEmail).name %>(<%- user.email %>)"
                 disabled
               />
             </label>
@@ -38,13 +38,21 @@
           <div class="columns">
             <label for="name" class="column">
               실험명
-              <input type="text" class="input" name="name" value="<%= experiment.name %>" id="" />
+              <input
+                type="text"
+                class="input"
+                name="name"
+                value="<%- experiment.name %>"
+                id=""
+              />
             </label>
           </div>
           <div class="columns">
             <label for="" class="column is-desktop">
               실험 설명
-              <textarea class="textarea"><%= experiment.description %></textarea>
+              <textarea class="textarea">
+<%- experiment.description %></textarea
+              >
             </label>
           </div>
           <div class="columns">
@@ -54,24 +62,26 @@
               <!-- TODO: ADD 실험 링크 -->
             </label>
           </div>
-          <div>실험파일 업로드</div>
+          <div>실험파일</div>
           <div class="file has-name">
             <label class="file-label">
-              <input class="file-input" type="file" name="resume" />
+              <!-- <input class="file-input" type="file" name="resume" /> -->
               <span class="file-cta">
                 <span class="file-icon">
-                  <i class="fas fa-upload"></i>
+                  <i class="fas fa-download"></i>
                 </span>
-                <span class="file-label"> 파일 고르기... </span>
+                <span class="file-label"> 파일 다운로드 </span>
               </span>
               <span class="file-name">
-                Screen Shot 2017-07-29 at 15.54.25.png
+                test.zip
               </span>
             </label>
           </div>
           <!-- 모달 끝 -->
           <button class="button is-success is-pulled-right">저장하기</button>
-          <button class="button is-danger is-pulled-right mr-2">삭제하기</button>
+          <button class="button is-danger is-pulled-right mr-2">
+            삭제하기
+          </button>
         </form>
       </div>
     </div>
