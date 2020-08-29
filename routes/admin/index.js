@@ -38,9 +38,17 @@ AdminRouter.get("/login", RenderControllers.render("admin/pages/login"))
 
 AdminRouter.get("/users", RenderControllers.render("admin/pages/users")).get(
   "/users/:email",
+  LevelRestrictor(200),
   ContextProviders.userContextProviderByEmail(),
   RenderControllers.render("admin/pages/user")
-);
+).post('/users/:email', LevelRestrictor(200), (req, res, next) => {
+  prisma.user.update({
+    where: { email: req.params.email },
+    data: { ...req.body, level: +req.body.level },
+  }).then(user => {
+    res.render('utils/message', { message: "성공적으로 수정되었습니다." })
+  }).catch(respondWithError)
+})
 
 AdminRouter.get(
   "/experiments",
