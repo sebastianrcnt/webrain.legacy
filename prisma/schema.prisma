@@ -21,6 +21,7 @@ model Experiment {
   name        String   @default("unset")
   description String?
   fileId      String   @default("unset")
+  fileName    String?
   User        User?    @relation(fields: [userEmail], references: [email])
   Result      Result[]
 }
