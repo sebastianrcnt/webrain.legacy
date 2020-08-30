@@ -29,11 +29,13 @@
                 </td>
                 <td><%= experiment.name %></td>
                 <td>
-                  <%= users.find(user => user.email ===
-                  experiment.userEmail).name %>(<%= experiment.userEmail %> )
+                  <%= experiment.User.name %>(<%= experiment.User.email %>)
                 </td>
                 <td>
-                  <a href="/admin/experiments/<%= experiment.id %>" class="button is-info is-small is-centered">
+                  <a
+                    href="/admin/experiments/<%= experiment.id %>"
+                    class="button is-info is-small is-centered"
+                  >
                     <i class="fa fa-edit mr-1"></i>수정/삭제
                   </a>
                 </td>
