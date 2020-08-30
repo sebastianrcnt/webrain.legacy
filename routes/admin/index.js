@@ -153,9 +153,13 @@ AdminRouter.get(
       });
   });
 
-AdminRouter.get("/results", (req, res) => {
-  res.render("admin/pages/results", req.context);
-});
+AdminRouter.get(
+  "/results",
+  ContextProviders.provideResultsContext(),
+  (req, res) => {
+    res.render("admin/pages/results", req.context);
+  }
+);
 
 AdminRouter.all("/", (req, res) => {
   res.redirect("/admin/projects");

@@ -83,3 +83,13 @@ exports.provideProjectContextById = () => async (req, res, next) => {
     })
     .catch(respondWithError(res));
 };
+
+exports.provideResultsContext = () => async (req, res, next) => {
+  prisma.result
+    .findMany({ include: { User: true, Project: true, Experiment: true } })
+    .then((results) => {
+      req.context.results = results;
+      next();
+    })
+    .catch(respondWithError(res));
+};
