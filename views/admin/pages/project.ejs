@@ -6,141 +6,205 @@
     <div class="px-3 pb-6">
       <div class="container">
         <h1 class="title">프로젝트 수정</h1>
-        <form action="">
+        <form action="/admin/projects/<%= project.id %>" method="POST">
+          <div class="columns">
+            <label for="name" class="column">
+              프로젝트 ID
+              <input
+                type="text"
+                class="input"
+                value="<%= project.id %>"
+                name="name"
+                disabled
+              />
+            </label>
+          </div>
           <div class="columns">
             <label for="name" class="column">
               프로젝트명
-              <input type="text" class="input" name="name" id="" />
+              <input
+                type="text"
+                class="input"
+                value="<%= project.name %>"
+                name="name"
+                id=""
+              />
+            </label>
+          </div>
+          <div class="columns">
+            <label for="name" class="column">
+              프로젝트 소유자
+              <input
+                type="text"
+                class="input"
+                value="<%= project.User.name %>(<%= project.User.email %>)"
+                name="name"
+                id=""
+                disabled
+              />
             </label>
           </div>
           <div class="columns">
             <label for="" class="column is-desktop">
               프로젝트 설명
-              <textarea class="textarea"></textarea>
+              <textarea name="description" class="textarea">
+<%= project.description %></textarea
+              >
             </label>
           </div>
           <div class="columns">
             <label for="" class="column is-desktop">
               연구 동의서
-              <textarea class="textarea"> </textarea>
+              <textarea name="agreement" class="textarea">
+<%= project.agreement %></textarea
+              >
             </label>
           </div>
+          <% const myExperiments = experiments.filter(e => e.User.email ===
+          loggedInUser.email) %> <% const projectExperimentIds =
+          project.Experiments.map(e => e.id) %> <% const unSelectedExperiments =
+          myExperiments.filter(e => !projectExperimentIds.includes(e.id)) %>
           <h2>등록된 실험</h2>
-          <button
-            type="button"
-            class="button is-pulled-right mb-5 is-primary"
-            onclick="$('#search-experiments-modal').addClass('is-active')"
-          >
-            연구 목록에서 추가
-          </button>
-          <!-- 새로운 연구 추가 모달 -->
-          <!-- 모달 끝 -->
           <table
             class="table is-bordered is-hoverable is-fullwidth has-text-centered"
-            id="experiments-table"
+            id="experiments"
           >
             <thead>
               <tr>
-                <th>순서</th>
                 <th>실험 ID</th>
                 <th>실험명</th>
                 <th>액션</th>
               </tr>
             </thead>
             <tbody>
+              <% for( let experiment of project.Experiments ) { %>
               <tr>
-                <td>1</td>
-                <td>AB123123</td>
-                <td>실험1</td>
+                <td><%= experiment.id %></td>
+                <td><%= experiment.name %></td>
                 <td>
-                  <a href="" class="button is-small is-danger">삭제</a>
-                  <a href="" class="button is-small">
-                    <i class="fa fa-chevron-up"></i>
-                  </a>
-                  <a href="" class="button is-small">
-                    <i class="fa fa-chevron-down"></i>
-                  </a>
+                  <span
+                    data-experiment-id="<%= experiment.id %>"
+                    class="button py-0 is-danger disconnect-experiment-to-project"
+                  >
+                    제거
+                  </span>
                 </td>
               </tr>
+              <% } %>
+            </tbody>
+          </table>
+          <h2>등록되지 않은 실험</h2>
+          <table
+            class="table is-bordered is-hoverable is-fullwidth has-text-centered"
+            id="unselected-experiments"
+          >
+            <thead>
               <tr>
-                <td>2</td>
-                <td>AB123123</td>
-                <td>실험2</td>
+                <th>실험 ID</th>
+                <th>실험명</th>
+                <th>액션</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% for( let experiment of unSelectedExperiments ) { %>
+              <tr>
+                <td><%= experiment.id %></td>
+                <td><%= experiment.name %></td>
                 <td>
-                  <a href="" class="button is-small is-danger">삭제</a>
-                  <a href="" class="button is-small">
-                    <i class="fa fa-chevron-up"></i>
-                  </a>
-                  <a href="" class="button is-small">
-                    <i class="fa fa-chevron-down"></i>
-                  </a>
+                  <span
+                    data-experiment-id="<%= experiment.id %>"
+                    class="button py-0 is-success connect-experiment-to-project"
+                  >
+                    추가
+                  </span>
                 </td>
               </tr>
+              <% } %>
             </tbody>
           </table>
           <h2>공개여부</h2>
           <div class="select">
-            <select name="" id="">
-              <option value="true">공개</option>
-              <option value="true">비공개</option>
+            <select name="public">
+              <option value="1" <%= project.public == 0 ? '' : 'selected' %>>공개</option>
+              <option value="0" <%= project.public == 0 ? 'selected' : '' %>>비공개</option>
             </select>
           </div>
 
-  
           <div class="row mt-3">
-            <button class="button is-success is-pulled-right">저장하기</button>
+            <button type="submit" class="button is-success is-pulled-right">저장하기</button>
+            <button type="button" id="delete" class="button is-danger is-pulled-right mr-2">삭제하기</button>
           </div>
-          
         </form>
-        <!-- 모달 -->
-        <div class="modal" id="search-experiments-modal">
-          <div class="modal-background"></div>
-          <div class="modal-card">
-            <header class="modal-card-head">
-              <p class="modal-card-title">추가할 실험을 선택하세요</p>
-              <button
-                class="delete"
-                aria-label="close"
-                onclick="$('#search-experiments-modal').removeClass('is-active')"
-              ></button>
-            </header>
-            <section class="modal-card-body">
-              <table class="table is-fullwidth" id="search-experiments">
-                <thead>
-                  <tr>
-                    <th>실험ID</th>
-                    <th>실험명</th>
-                  </tr>
-                </thead>
-                <tbody class="has-text-centered">
-                  <tr class="is-selected">
-                    <td>1111</td>
-                    <td>실험1</td>
-                  </tr>
-                  <tr>
-                    <td>2222</td>
-                    <td>실험2</td>
-                  </tr>
-                </tbody>
-              </table>
-            </section>
-            <footer class="modal-card-foot">
-              <button class="button is-success">추가하기</button>
-              <button
-                class="button"
-                onclick="$('#search-experiments-modal').removeClass('is-active')"
-              >
-                취소
-              </button>
-            </footer>
-          </div>
-        </div>
       </div>
     </div>
   </body>
   <script>
     $(document).ready(() => {
-      $("#search-experiments").DataTable();
+      $("#experiments").DataTable();
+      $("#unselected-experiments").DataTable();
+      $("span.connect-experiment-to-project").on("click", (event) => {
+        const currentProjectId = "<%= project.id %>";
+        const targetExperimentId = $(event.target).attr("data-experiment-id");
+        $.ajax({
+          method: "get",
+          url: `/api/process/connect-experiment-to-project?experimentId=${targetExperimentId}&projectId=${currentProjectId}`,
+        })
+          .done(() => {
+            $(event.target)
+              .toggleClass("disconnect-experiment-to-project")
+              .toggleClass("connect-experiment-to-project")
+              .text("제거")
+              .toggleClass("is-danger")
+              .toggleClass("is-success");
+            const targetRow = $(event.target).parent().parent();
+            $(targetRow).appendTo("#experiments tbody");
+          })
+          .fail(() => {
+            alert("실패하였습니다");
+          })
+          .finally((result) => {
+            console.log(result);
+          });
+      });
+      $("span.disconnect-experiment-to-project").on("click", (event) => {
+        const currentProjectId = "<%= project.id %>";
+        const targetExperimentId = $(event.target).attr("data-experiment-id");
+        console.log(event.target);
+        $.ajax({
+          method: "get",
+          url: `/api/process/disconnect-experiment-to-project?experimentId=${targetExperimentId}&projectId=${currentProjectId}`,
+        })
+          .done(() => {
+            $(event.target)
+              .toggleClass("disconnect-experiment-to-project")
+              .toggleClass("connect-experiment-to-project")
+              .text("추가")
+              .toggleClass("is-danger")
+              .toggleClass("is-success");
+            const targetRow = $(event.target).parent().parent();
+            $(targetRow).appendTo("#unselected-experiments tbody");
+          })
+          .fail(() => {
+            alert("실패하였습니다");
+          })
+          .finally((result) => {
+            console.log(result);
+          });
+      });
+
+      $('#delete').on('click', () => {
+        $.ajax({
+          method: "delete",
+          url: "/admin/projects/<%= project.id %>"
+        }).then(() => {
+          alert('삭제되었습니다.')
+          window.location.href = "/admin/projects"
+        }).catch(() => {
+          alert('삭제에 실패했습니다')
+        }).always((response) => {
+          console.log(response)
+        })
+      })
     });
   </script>
 </html>
