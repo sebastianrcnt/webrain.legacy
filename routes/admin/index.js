@@ -24,11 +24,12 @@ const upload = multer({
 });
 const respondWithError = require("../../middlewares/error");
 const { PrismaClient } = require("@prisma/client");
+const ProjectControllers = require("../../controllers/projects");
 const prisma = new PrismaClient();
 
 // Pages
-AdminRouter.use(ContextProviders.usersContextProvider());
-AdminRouter.use(ContextProviders.experimentsContextProvider());
+AdminRouter.use(ContextProviders.provideUsersContext());
+AdminRouter.use(ContextProviders.provideExperimentsContext());
 
 AdminRouter.get("/login", RenderControllers.render("admin/pages/login"))
   .get("/register", RenderControllers.render("admin/pages/register"))
@@ -40,7 +41,7 @@ AdminRouter.get("/users", RenderControllers.render("admin/pages/users"))
   .get(
     "/users/:email",
     LevelRestrictor(200),
-    ContextProviders.userContextProviderByEmail(),
+    ContextProviders.provideUserContextByEmail(),
     RenderControllers.render("admin/pages/user")
   )
   .post("/users/:email", LevelRestrictor(200), (req, res, next) => {
@@ -50,7 +51,11 @@ AdminRouter.get("/users", RenderControllers.render("admin/pages/users"))
         data: { ...req.body, level: +req.body.level },
       })
       .then((user) => {
-        res.render("utils/message", { message: "성공적으로 수정되었습니다." });
+        res.render("utils/message-with-link", {
+          message: "성공적으로 수정되었습니다.",
+          link: "/admin/users",
+          linkname: "유저 목록으로 이동",
+        });
       })
       .catch(respondWithError);
   });
@@ -67,7 +72,7 @@ AdminRouter.get(
   )
   .get(
     "/experiments/:id",
-    ContextProviders.experimentContextProviderById(),
+    ContextProviders.provideExperimentContextById(),
     RenderControllers.render("admin/pages/experiment")
   )
   .post(
@@ -100,12 +105,53 @@ AdminRouter.get(
 
 AdminRouter.get(
   "/projects",
-  ContextProviders.projectsContextProvider(),
+  ContextProviders.provideProjectsContext(),
   (req, res) => {
     res.render("admin/pages/projects", req.context);
   }
-).get("/projects/:id", (req, res) => {
-  res.render("admin/pages/projects", req.context);
-});
+)
+  .get(
+    "/projects/new",
+    ContextProviders.provideExperimentsContext(),
+    RenderControllers.render("admin/pages/project-new")
+  )
+  .get(
+    "/projects/:id",
+    ContextProviders.provideProjectContextById(),
+    ContextProviders.provideExperimentsContext(),
+    RenderControllers.render("admin/pages/project")
+  )
+  .post("/projects", ProjectControllers.createProject)
+  .post(
+    "/projects/:id",
+    ContextProviders.provideProjectContextById(),
+    (req, res) => {
+      console.log(req.body);
+      const { name, description, agreement, public } = req.body;
+      prisma.project
+        .update({
+          where: { id: req.params.id },
+          data: { name, description, agreement, public: +public },
+        })
+        .then((project) => {
+          res.render("utils/message-with-link", {
+            message: "프로젝트가 성공적으로 저장되었습니다",
+            link: "/admin/projects",
+            linkname: "프로젝트 목록 페이지로 이동",
+          });
+        })
+        .catch(respondWithError);
+    }
+  )
+  .delete("/projects/:id", LevelRestrictor(100), (req, res, next) => {
+    prisma.project
+      .delete({ where: { id: req.params.id } })
+      .then((project) => {
+        res.status(200).json("성공적으로 삭제되었습니다");
+      })
+      .catch((err) => {
+        res.status(500).json(err);
+      });
+  });
 
 module.exports = AdminRouter;

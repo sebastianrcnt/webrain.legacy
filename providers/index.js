@@ -3,7 +3,7 @@ const { PrismaClient } = require("@prisma/client");
 const respondWithError = require("../middlewares/error");
 const prisma = new PrismaClient();
 
-exports.usersContextProvider = () => async (req, res, next) => {
+exports.provideUsersContext = () => async (req, res, next) => {
   prisma.user
     .findMany({ where: {} })
     .then((users) => {
@@ -13,7 +13,7 @@ exports.usersContextProvider = () => async (req, res, next) => {
     .catch(respondWithError);
 };
 
-exports.userContextProviderByEmail = () => async (req, res, next) => {
+exports.provideUserContextByEmail = () => async (req, res, next) => {
   prisma.user
     .findOne({ where: { email: req.params.email } })
     .then((user) => {
@@ -31,9 +31,9 @@ exports.userContextProviderByEmail = () => async (req, res, next) => {
     .catch(respondWithError);
 };
 
-exports.experimentsContextProvider = () => async (req, res, next) => {
+exports.provideExperimentsContext = () => async (req, res, next) => {
   prisma.experiment
-    .findMany({ where: {} })
+    .findMany({ where: {}, include: { User: true } })
     .then((experiments) => {
       req.context.experiments = experiments;
       next();
@@ -41,7 +41,7 @@ exports.experimentsContextProvider = () => async (req, res, next) => {
     .catch(respondWithError);
 };
 
-exports.experimentContextProviderById = () => async (req, res, next) => {
+exports.provideExperimentContextById = () => async (req, res, next) => {
   prisma.experiment
     .findOne({
       where: { id: req.params.id },
@@ -61,7 +61,7 @@ exports.experimentContextProviderById = () => async (req, res, next) => {
     .catch(respondWithError);
 };
 
-exports.projectsContextProvider = () => async (req, res, next) => {
+exports.provideProjectsContext = () => async (req, res, next) => {
   prisma.project
     .findMany({ include: { User: true } })
     .then((projects) => {
@@ -71,11 +71,11 @@ exports.projectsContextProvider = () => async (req, res, next) => {
     .catch(respondWithError);
 };
 
-exports.projectContextProviderById = () => async (req, res, next) => {
+exports.provideProjectContextById = () => async (req, res, next) => {
   prisma.project
     .findOne({
       where: { id: req.params.id },
-      include: { User: true, Result: true, ExperimentToProject: true },
+      include: { User: true, Result: true, Experiments: true },
     })
     .then((project) => {
       req.context.project = project;
