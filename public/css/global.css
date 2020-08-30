@@ -13,4 +13,9 @@ pre {
   height: 60vh;
   width: 70vw;
 }
+
+input[disabled] {
+  color: grey;
+  -webkit-text-fill-color: grey;
+}
 /*# sourceMappingURL=global.css.map */
