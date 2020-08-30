@@ -75,7 +75,11 @@ exports.provideProjectContextById = () => async (req, res, next) => {
   prisma.project
     .findOne({
       where: { id: req.params.id },
-      include: { User: true, Result: true, Experiments: true },
+      include: {
+        User: true,
+        Result: true,
+        Experiments: { include: { User: true } },
+      },
     })
     .then((project) => {
       req.context.project = project;

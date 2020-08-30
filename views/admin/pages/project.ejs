@@ -71,16 +71,23 @@
           >
             <thead>
               <tr>
-                <th>실험 ID</th>
                 <th>실험명</th>
+                <th>소유자</th>
                 <th>액션</th>
               </tr>
             </thead>
             <tbody>
               <% for( let experiment of project.Experiments ) { %>
               <tr>
-                <td><%= experiment.id %></td>
-                <td><%= experiment.name %></td>
+                <td>
+                  <a href="/admin/experiments/<%= experiment.id %>">
+                    <%= experiment.name %></td>
+                  </a>
+                <td>
+                  <a href="/admin/users/<%= experiment.User.email %>">
+                    <%= experiment.User.name %>
+                  </a>
+                </td>
                 <td>
                   <span
                     data-experiment-id="<%= experiment.id %>"
@@ -100,16 +107,23 @@
           >
             <thead>
               <tr>
-                <th>실험 ID</th>
                 <th>실험명</th>
+                <th>소유자</th>
                 <th>액션</th>
               </tr>
             </thead>
             <tbody>
               <% for( let experiment of unSelectedExperiments ) { %>
               <tr>
-                <td><%= experiment.id %></td>
-                <td><%= experiment.name %></td>
+                <td>
+                  <a href="/admin/experiments/<%= experiment.id %>">
+                    <%= experiment.name %></td>
+                  </a>
+                <td>
+                  <a href="/admin/users/<%= experiment.User.email %>">
+                    <%= experiment.User.name %>
+                  </a>
+                </td>
                 <td>
                   <span
                     data-experiment-id="<%= experiment.id %>"

@@ -23,13 +23,13 @@
               <% for( let experiment of experiments ) { %>
               <tr>
                 <td>
-                  <a href="/admin/experiments/<%= experiment.id %>">
-                    <%= experiment.id %>
-                  </a>
+                  <%= experiment.id %>
                 </td>
                 <td><%= experiment.name %></td>
                 <td>
-                  <%= experiment.User.name %>(<%= experiment.User.email %>)
+                  <a href="/admin/users/<%= experiment.User.email %>">
+                    <%= experiment.User.name %>
+                  </a>
                 </td>
                 <td>
                   <a

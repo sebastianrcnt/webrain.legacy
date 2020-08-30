@@ -23,10 +23,14 @@
             <tbody>
               <% for( let project of projects ) { %>
               <tr>
-                <td><%= project.id %></td>
+                <td>
+                  <%= project.id %>
+                </td>
                 <td><%= project.name %></td>
                 <td>
-                  <%= project.User.name %>(<%= project.User.email %>)
+                  <a href="/admin/users/<%= project.User.email %>">
+                    <%= project.User.name %>
+                  </a>
                 </td>
                 <td><%= project.public == 0 ? "아니오" : "예" %></td>
                 <td>
