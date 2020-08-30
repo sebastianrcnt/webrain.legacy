@@ -162,7 +162,7 @@
           .fail(() => {
             alert("실패하였습니다");
           })
-          .finally((result) => {
+          .always((result) => {
             console.log(result);
           });
       });
@@ -187,7 +187,7 @@
           .fail(() => {
             alert("실패하였습니다");
           })
-          .finally((result) => {
+          .always((result) => {
             console.log(result);
           });
       });
