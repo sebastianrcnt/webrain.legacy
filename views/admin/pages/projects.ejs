@@ -16,26 +16,30 @@
                 <th>ID</th>
                 <th>이름</th>
                 <th>연구자</th>
+                <th>공개여부</th>
                 <th>액션</th>
               </tr>
             </thead>
             <tbody>
+              <% for( let project of projects ) { %>
               <tr>
-                <td>AB123123</td>
-                <td>정시원(test@monet.com)</td>
-                <td>The Project</td>
+                <td><%= project.id %></td>
+                <td><%= project.name %></td>
+                <td><%= project.userEmail %></td>
+                <td><%= project.public == 0 ? "아니오" : "예" %></td>
                 <td>
                   <a href="" class="button is-info is-small is-centered">
                     <i class="fa fa-edit mr-1"></i>수정
                   </a>
-                  <a href="" class="button  is-small is-centered is-danger">
-                    <i class="fa fa-minus-circle mr-1"></i>삭제
-                  </a>
                 </td>
               </tr>
+              <% } %>
             </tbody>
             <tfoot>
-              <a href="/admin/project" class="button is-primary is-pulled-right mr-2 mb-6">
+              <a
+                href="/admin/project"
+                class="button is-primary is-pulled-right mr-2 mb-6"
+              >
                 새로운 프로젝트
               </a>
             </tfoot>

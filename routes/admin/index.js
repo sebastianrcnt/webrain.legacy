@@ -91,14 +91,21 @@ AdminRouter.get(
     prisma.experiment
       .delete({ where: { id: req.params.id } })
       .then((experiment) => {
-        res.status(200).json("성공적으로 삭제되었습니다")
+        res.status(200).json("성공적으로 삭제되었습니다");
       })
       .catch((err) => {
-        res.status(500).json(err)
+        res.status(500).json(err);
       });
   });
 
-// Actions
-AdminRouter;
+AdminRouter.get(
+  "/projects",
+  ContextProviders.projectsContextProvider(),
+  (req, res) => {
+    res.render("admin/pages/projects", req.context);
+  }
+).get("/projects/:id", (req, res) => {
+  res.render("admin/pages/projects", req.context);
+});
 
 module.exports = AdminRouter;

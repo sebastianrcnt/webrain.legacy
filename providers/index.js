@@ -1,4 +1,5 @@
 const { PrismaClient } = require("@prisma/client");
+
 const respondWithError = require("../middlewares/error");
 const prisma = new PrismaClient();
 
@@ -13,18 +14,21 @@ exports.usersContextProvider = () => async (req, res, next) => {
 };
 
 exports.userContextProviderByEmail = () => async (req, res, next) => {
-  prisma.user.findOne({where: {email: req.params.email}}).then(user => {
-    if (user) {
-      req.context.user = user;
-      next();
-    } else {
-      res.render('utils/message-with-link', {
-        message: "존재하지 않거나 삭제된 유저입니다",
-        link: "javascript:history.back()",
-        linkname: "뒤로가기",
-      })
-    }
-  }).catch(respondWithError);
+  prisma.user
+    .findOne({ where: { email: req.params.email } })
+    .then((user) => {
+      if (user) {
+        req.context.user = user;
+        next();
+      } else {
+        res.render("utils/message-with-link", {
+          message: "존재하지 않거나 삭제된 유저입니다",
+          link: "javascript:history.back()",
+          linkname: "뒤로가기",
+        });
+      }
+    })
+    .catch(respondWithError);
 };
 
 exports.experimentsContextProvider = () => async (req, res, next) => {
@@ -53,6 +57,16 @@ exports.experimentContextProviderById = () => async (req, res, next) => {
           linkname: "뒤로가기",
         });
       }
+    })
+    .catch(respondWithError);
+};
+
+exports.projectsContextProvider = () => async (req, res, next) => {
+  prisma.project
+    .findMany({})
+    .then((projects) => {
+      req.context.projects = projects;
+      next();
     })
     .catch(respondWithError);
 };
