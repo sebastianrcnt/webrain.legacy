@@ -36,8 +36,15 @@
                     href="/admin/experiments/<%= experiment.id %>"
                     class="button is-info is-small is-centered"
                   >
-                    <i class="fa fa-edit mr-1"></i>수정/삭제
+                    <i class="fa fa-edit mr-1"></i>수정
                   </a>
+                  <button
+                    data-experiment-id="<%= experiment.id %>"
+                    type="button"
+                    class="button delete-experiment-button is-danger is-small is-centered"
+                  >
+                    <i class="fa fa-trash mr-1"></i>삭제
+                  </button>
                 </td>
               </tr>
               <% } %>
@@ -55,5 +62,21 @@
       </section>
     </div>
   </body>
-  <script></script>
+  <script>
+    $(document).ready(() => {
+      $(".delete-experiment-button").on("click", (event) => {
+        const experimentId = $(event.target).attr("data-experiment-id");
+        $.ajax({ method: "delete", url: `/admin/experiments/${experimentId}` })
+          .done(() => {
+            alert("성공적으로 삭제되었습니다");
+          })
+          .fail((error) => {
+            alert("삭제에 실패하였습니다");
+          })
+          .always((result) => {
+            window.location.reload();
+          });
+      });
+    });
+  </script>
 </html>

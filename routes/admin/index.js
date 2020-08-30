@@ -102,6 +102,7 @@ AdminRouter.get(
         res.status(200).json("성공적으로 삭제되었습니다");
       })
       .catch((err) => {
+        console.log(err);
         res.status(500).json(err);
       });
   });
@@ -149,6 +150,7 @@ AdminRouter.get(
         res.status(200).json("성공적으로 삭제되었습니다");
       })
       .catch((err) => {
+        console.log(err);
         res.status(500).json(err);
       });
   });
@@ -159,9 +161,63 @@ AdminRouter.get(
   (req, res) => {
     res.render("admin/pages/results", req.context);
   }
-);
+)
+  .get(
+    "/results/new",
+    ContextProviders.provideUsersContext(),
+    ContextProviders.provideProjectsContext(),
+    ContextProviders.provideExperimentsContext(),
+    (req, res) => {
+      res.render("admin/pages/result-new", req.context);
+    }
+  )
+  .delete("/results/:id", (req, res) => {
+    prisma.result
+      .delete({ where: { id: +req.params.id } })
+      .then((result) => {
+        res.status(200).json("성공적으로 삭제되었습니다");
+      })
+      .catch((err) => {
+        console.log(err);
+        res.status(500).json(err);
+      });
+  })
+  .post("/results", async (req, res) => {
+    console.log(req.body);
+    const { user, project } = req.body;
+    try {
+      const targetProject = await prisma.project.findOne({
+        where: { id: project },
+        include: { Experiments: true },
+      });
 
-AdminRouter.all("/", (req, res) => {
+      let queue = targetProject.Experiments.map((experiment) => {
+        return prisma.result.create({
+          data: {
+            User: { connect: { email: user } },
+            Project: { connect: { id: project } },
+            Experiment: { connect: { id: experiment.id } },
+          },
+        });
+      });
+
+      await Promise.all(queue);
+      res.render("utils/message-with-link", {
+        message: "성공적으로 생성했습니다",
+        link: "/admin/results",
+        linkname: "게임생성/결과 페이지로 이동하기",
+      });
+    } catch (e) {
+      console.log(e);
+      res.render("utils/message-with-link", {
+        message: "생성에 실패했습니다",
+        link: "/admin/results",
+        linkname: "게임생성/결과 페이지로 이동하기",
+      });
+    }
+  });
+
+AdminRouter.all("/", async (req, res) => {
   res.redirect("/admin/projects");
 });
 

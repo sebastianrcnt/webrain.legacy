@@ -43,17 +43,43 @@
                   <a class="button is-primary is-small is-centered">
                     <i class="fa fa-download mr-1"></i>결과다운
                   </a>
-                  <a class="button is-danger is-small is-centered">
+                  <button
+                    data-result-id="<%= result.id %>"
+                    type="button"
+                    class="button delete-result-button is-danger is-small is-centered"
+                  >
                     <i class="fa fa-trash mr-1"></i>삭제
-                  </a>
+                  </button>
                 </td>
               </tr>
               <% } %>
             </tbody>
+            <tfoot>
+              <a
+                href="/admin/results/new"
+                class="button is-primary is-pulled-right mr-2 mb-6"
+              >
+                게임 생성하기
+              </a>
+            </tfoot>
           </table>
         </div>
       </section>
     </div>
   </body>
-  <script></script>
+  <script>
+    $(".delete-result-button").on("click", (event) => {
+      const resultId = $(event.target).attr("data-result-id");
+      $.ajax({ method: "delete", url: `/admin/results/${resultId}` })
+        .done(() => {
+          alert("성공적으로 삭제되었습니다");
+        })
+        .fail(() => {
+          alert("삭제에 실패하였습니다");
+        })
+        .always((result) => {
+          window.location.reload();
+        });
+    });
+  </script>
 </html>
