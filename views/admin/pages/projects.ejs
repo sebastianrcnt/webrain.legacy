@@ -25,10 +25,15 @@
               <tr>
                 <td><%= project.id %></td>
                 <td><%= project.name %></td>
-                <td><%= project.userEmail %></td>
+                <td>
+                  <%= project.User.name %>(<%= project.User.email %>)
+                </td>
                 <td><%= project.public == 0 ? "아니오" : "예" %></td>
                 <td>
-                  <a href="" class="button is-info is-small is-centered">
+                  <a
+                    href="/admin/projects/<%= project.id %>"
+                    class="button is-info is-small is-centered"
+                  >
                     <i class="fa fa-edit mr-1"></i>수정
                   </a>
                 </td>
@@ -37,7 +42,7 @@
             </tbody>
             <tfoot>
               <a
-                href="/admin/project"
+                href="/admin/projects/new"
                 class="button is-primary is-pulled-right mr-2 mb-6"
               >
                 새로운 프로젝트
