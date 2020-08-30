@@ -37,6 +37,7 @@ AdminRouter.get("/login", RenderControllers.render("admin/pages/login"))
   .post("/register", UserControllers.createUser)
   .post("/login", UserControllers.loginAndSignToken);
 
+AdminRouter.use(LevelRestrictor(100));
 AdminRouter.get("/users", RenderControllers.render("admin/pages/users"))
   .get(
     "/users/:email",
@@ -57,7 +58,7 @@ AdminRouter.get("/users", RenderControllers.render("admin/pages/users"))
           linkname: "유저 목록으로 이동",
         });
       })
-      .catch(respondWithError);
+      .catch(respondWithError(res));
   });
 
 AdminRouter.get(
@@ -90,7 +91,7 @@ AdminRouter.get(
           linkname: "실험 목록 페이지로 이동",
         });
       })
-      .catch(respondWithError);
+      .catch(respondWithError(res));
   })
   .delete("/experiments/:id", LevelRestrictor(100), (req, res, next) => {
     prisma.experiment
@@ -140,7 +141,7 @@ AdminRouter.get(
             linkname: "프로젝트 목록 페이지로 이동",
           });
         })
-        .catch(respondWithError);
+        .catch(respondWithError(res));
     }
   )
   .delete("/projects/:id", LevelRestrictor(100), (req, res, next) => {
@@ -153,5 +154,9 @@ AdminRouter.get(
         res.status(500).json(err);
       });
   });
+
+AdminRouter.all("/", (req, res) => {
+  res.redirect("/admin/projects");
+});
 
 module.exports = AdminRouter;

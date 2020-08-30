@@ -150,14 +150,15 @@
           url: `/api/process/connect-experiment-to-project?experimentId=${targetExperimentId}&projectId=${currentProjectId}`,
         })
           .done(() => {
-            $(event.target)
-              .toggleClass("disconnect-experiment-to-project")
-              .toggleClass("connect-experiment-to-project")
-              .text("제거")
-              .toggleClass("is-danger")
-              .toggleClass("is-success");
-            const targetRow = $(event.target).parent().parent();
-            $(targetRow).appendTo("#experiments tbody");
+            // $(event.target)
+            //   .toggleClass("disconnect-experiment-to-project")
+            //   .toggleClass("connect-experiment-to-project")
+            //   .text("제거")
+            //   .toggleClass("is-danger")
+            //   .toggleClass("is-success");
+            // const targetRow = $(event.target).parent().parent();
+            // $(targetRow).appendTo("#experiments tbody");
+            window.location.reload();
           })
           .fail(() => {
             alert("실패하였습니다");
@@ -175,14 +176,15 @@
           url: `/api/process/disconnect-experiment-to-project?experimentId=${targetExperimentId}&projectId=${currentProjectId}`,
         })
           .done(() => {
-            $(event.target)
-              .toggleClass("disconnect-experiment-to-project")
-              .toggleClass("connect-experiment-to-project")
-              .text("추가")
-              .toggleClass("is-danger")
-              .toggleClass("is-success");
-            const targetRow = $(event.target).parent().parent();
-            $(targetRow).appendTo("#unselected-experiments tbody");
+            // $(event.target)
+            //   .toggleClass("disconnect-experiment-to-project")
+            //   .toggleClass("connect-experiment-to-project")
+            //   .text("추가")
+            //   .toggleClass("is-danger")
+            //   .toggleClass("is-success");
+            // const targetRow = $(event.target).parent().parent();
+            // $(targetRow).appendTo("#unselected-experiments tbody");
+            window.location.reload();
           })
           .fail(() => {
             alert("실패하였습니다");

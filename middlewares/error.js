@@ -1,4 +1,4 @@
-const respondWithError = (error) => {
+const respondWithError = (response) => (error) => {
   if (error.intended) {
     res.status(401).render("utils/message", {
       message: error.message,

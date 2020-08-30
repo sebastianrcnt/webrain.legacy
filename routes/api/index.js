@@ -54,7 +54,7 @@ ApiRouter.get("/process/connect-experiment-to-project", (req, res) => {
       .then((success) => {
         res.status(200).send("success");
       })
-      .catch(respondWithError);
+      .catch(respondWithError(res));
   } else {
     res.status(400).send();
   }
@@ -75,7 +75,7 @@ ApiRouter.get("/process/disconnect-experiment-to-project", (req, res) => {
       .then((success) => {
         res.status(200).send("success");
       })
-      .catch(respondWithError);
+      .catch(respondWithError(res));
   } else {
     res.status(400).send();
   }

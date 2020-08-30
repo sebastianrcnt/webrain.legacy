@@ -55,7 +55,7 @@ const createExperiment = async (req, res) => {
       });
   };
 
-  extractZip(req).then(writeToDatabase).catch(respondWithError);
+  extractZip(req).then(writeToDatabase).catch(respondWithError(res));
 };
 
 const ExperimentControllers = { createExperiment };

@@ -10,7 +10,7 @@ exports.provideUsersContext = () => async (req, res, next) => {
       req.context.users = users;
       next();
     })
-    .catch(respondWithError);
+    .catch(respondWithError(res));
 };
 
 exports.provideUserContextByEmail = () => async (req, res, next) => {
@@ -28,7 +28,7 @@ exports.provideUserContextByEmail = () => async (req, res, next) => {
         });
       }
     })
-    .catch(respondWithError);
+    .catch(respondWithError(res));
 };
 
 exports.provideExperimentsContext = () => async (req, res, next) => {
@@ -38,7 +38,7 @@ exports.provideExperimentsContext = () => async (req, res, next) => {
       req.context.experiments = experiments;
       next();
     })
-    .catch(respondWithError);
+    .catch(respondWithError(res));
 };
 
 exports.provideExperimentContextById = () => async (req, res, next) => {
@@ -58,7 +58,7 @@ exports.provideExperimentContextById = () => async (req, res, next) => {
         });
       }
     })
-    .catch(respondWithError);
+    .catch(respondWithError(res));
 };
 
 exports.provideProjectsContext = () => async (req, res, next) => {
@@ -68,7 +68,7 @@ exports.provideProjectsContext = () => async (req, res, next) => {
       req.context.projects = projects;
       next();
     })
-    .catch(respondWithError);
+    .catch(respondWithError(res));
 };
 
 exports.provideProjectContextById = () => async (req, res, next) => {
@@ -81,5 +81,5 @@ exports.provideProjectContextById = () => async (req, res, next) => {
       req.context.project = project;
       next();
     })
-    .catch(respondWithError);
+    .catch(respondWithError(res));
 };

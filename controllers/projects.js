@@ -23,7 +23,7 @@ const createProject = async (req, res) => {
           linkname: "프로젝트 목록 페이지로 이동",
         });
       })
-      .catch(respondWithError);
+      .catch(respondWithError(res));
   } else {
     res.status(400).send();
   }

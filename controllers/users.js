@@ -13,7 +13,7 @@ const loginAndSignToken = async (req, res, next) => {
         linkname: "관리자 페이지로 이동",
       });
     })
-    .catch(respondWithError);
+    .catch(respondWithError(res));
 };
 
 const eraseTokenAndRedirectToLogin = async (req, res, next) => {
@@ -30,7 +30,7 @@ const createUser = async (req, res, next) => {
         linkname: "대시보드로 이동",
       });
     })
-    .catch(respondWithError);
+    .catch(respondWithError(res));
 };
 
 const UserControllers = {
