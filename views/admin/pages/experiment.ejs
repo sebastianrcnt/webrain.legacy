@@ -104,13 +104,13 @@
             method: "DELETE",
           })
             .done(() => {
-              alert("삭제에 성공했습니다.");
+              alert("삭제되었습니다.");
+              window.location.href = "/admin/experiments";
             })
             .fail(() => {
               alert("삭제에 실패했습니다.");
             })
             .always((response) => {
-              window.location.reload()
               console.log(response);
             });
         }
