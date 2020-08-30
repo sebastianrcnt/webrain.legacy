@@ -3,6 +3,7 @@ const ApiRouter = express.Router();
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 const jwt = require("jsonwebtoken");
+const respondWithError = require("../../middlewares/error");
 
 // ApiRouter.use('/api/:name', (req, res) => {
 //   const name = req.params.name;
@@ -27,14 +28,56 @@ ApiRouter.get("/login", async (req, res) => {
           req.cookie("webrain-token", token);
           res.status(200).json(token);
         } else {
-          res.status(401).send('wrong password')
+          res.status(401).send("wrong password");
         }
       } else {
-        res.status(404).send("No user find with the email")
+        res.status(404).send("No user find with the email");
       }
     });
   } else {
     res.status(400).send("Email and Password is not provided");
+  }
+});
+
+ApiRouter.get("/process/connect-experiment-to-project", (req, res) => {
+  const { projectId, experimentId } = req.query;
+  if (projectId && experimentId) {
+    prisma.project
+      .update({
+        where: { id: projectId },
+        data: {
+          Experiments: {
+            connect: [{ id: experimentId }],
+          },
+        },
+      })
+      .then((success) => {
+        res.status(200).send("success");
+      })
+      .catch(respondWithError);
+  } else {
+    res.status(400).send();
+  }
+});
+
+ApiRouter.get("/process/disconnect-experiment-to-project", (req, res) => {
+  const { projectId, experimentId } = req.query;
+  if (projectId && experimentId) {
+    prisma.project
+      .update({
+        where: { id: projectId },
+        data: {
+          Experiments: {
+            disconnect: [{ id: experimentId }],
+          },
+        },
+      })
+      .then((success) => {
+        res.status(200).send("success");
+      })
+      .catch(respondWithError);
+  } else {
+    res.status(400).send();
   }
 });
 
