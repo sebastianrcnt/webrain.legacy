@@ -8,14 +8,15 @@ datasource db {
 }
 
 model Experiment {
-  id          String   @default("unset") @id
-  userEmail   String?
-  name        String   @default("unset")
-  description String?
-  fileId      String   @default("unset")
-  fileName    String?
-  User        User?    @relation(fields: [userEmail], references: [email])
-  Result      Result[]
+  id                  String                @default("unset") @id
+  userEmail           String?
+  name                String                @default("unset")
+  description         String?
+  fileId              String                @default("unset")
+  fileName            String?
+  User                User?                 @relation(fields: [userEmail], references: [email])
+  Result              Result[]
+  ExperimentToProject ExperimentToProject[]
 }
 
 model User {
@@ -34,17 +35,27 @@ model Result {
   json         String?     @default("{}") @unique
   timestamp    String?
   id           Int         @default(autoincrement()) @id
+  done         Int         @default(0)
   Experiment   Experiment? @relation(fields: [experimentId], references: [id])
   Project      Project?    @relation(fields: [projectId], references: [id])
 }
 
 model Project {
-  id          String   @default("unset") @id
-  description String?
-  agreement   String?
-  public      Int      @default(0)
-  userEmail   String?
-  name        String?
-  User        User?    @relation(fields: [userEmail], references: [email])
-  Result      Result[]
+  id                  String                @default("unset") @id
+  description         String?
+  agreement           String?
+  public              Int                   @default(0)
+  userEmail           String?
+  name                String?
+  User                User?                 @relation(fields: [userEmail], references: [email])
+  Result              Result[]
+  ExperimentToProject ExperimentToProject[]
+}
+
+model ExperimentToProject {
+  experimentId String?
+  projectId    String?
+  id           Int         @default(autoincrement()) @id
+  Experiment   Experiment? @relation(fields: [experimentId], references: [id])
+  Project      Project?    @relation(fields: [projectId], references: [id])
 }
