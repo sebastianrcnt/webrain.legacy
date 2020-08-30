@@ -34,7 +34,7 @@ const createExperiment = async (req, res) => {
       .create({
         data: {
           id: req.fileId,
-          User: {connect: {email: req.user.email}},
+          User: { connect: { email: req.user.email } },
           name: req.body.name,
           description: req.body.description,
           fileId: req.fileId,
@@ -42,8 +42,12 @@ const createExperiment = async (req, res) => {
         },
       })
       .then((experiment) => {
-        console.log("experimen t created", experiment);
-        res.render("utils/message", { message: "생성 완료" });
+        console.log("experiment created", experiment);
+        res.render("utils/message-with-link", {
+          message: "생성이 완료되었습니다",
+          link: "/admin/experiments",
+          linkname: "실험 목록 페이지로 이동",
+        });
       })
       .catch((err) => {
         console.log(err);
