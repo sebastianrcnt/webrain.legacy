@@ -28,9 +28,6 @@ const ProjectControllers = require("../../controllers/projects");
 const prisma = new PrismaClient();
 
 // Pages
-AdminRouter.use(ContextProviders.provideUsersContext());
-AdminRouter.use(ContextProviders.provideExperimentsContext());
-
 AdminRouter.get("/login", RenderControllers.render("admin/pages/login"))
   .get("/register", RenderControllers.render("admin/pages/register"))
   .get("/logout", UserControllers.eraseTokenAndRedirectToLogin)
@@ -38,7 +35,11 @@ AdminRouter.get("/login", RenderControllers.render("admin/pages/login"))
   .post("/login", UserControllers.loginAndSignToken);
 
 AdminRouter.use(LevelRestrictor(100));
-AdminRouter.get("/users", RenderControllers.render("admin/pages/users"))
+AdminRouter.get(
+  "/users",
+  ContextProviders.provideUsersContext(),
+  RenderControllers.render("admin/pages/users")
+)
   .get(
     "/users/:email",
     LevelRestrictor(200),
@@ -64,6 +65,7 @@ AdminRouter.get("/users", RenderControllers.render("admin/pages/users"))
 AdminRouter.get(
   "/experiments",
   LevelRestrictor(RESEARCHER),
+  ContextProviders.provideExperimentsContext(),
   RenderControllers.render("admin/pages/experiments")
 )
   .get(
@@ -111,11 +113,7 @@ AdminRouter.get(
     res.render("admin/pages/projects", req.context);
   }
 )
-  .get(
-    "/projects/new",
-    ContextProviders.provideExperimentsContext(),
-    RenderControllers.render("admin/pages/project-new")
-  )
+  .get("/projects/new", RenderControllers.render("admin/pages/project-new"))
   .get(
     "/projects/:id",
     ContextProviders.provideProjectContextById(),
