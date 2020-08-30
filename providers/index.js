@@ -63,9 +63,22 @@ exports.experimentContextProviderById = () => async (req, res, next) => {
 
 exports.projectsContextProvider = () => async (req, res, next) => {
   prisma.project
-    .findMany({})
+    .findMany({ include: { User: true } })
     .then((projects) => {
       req.context.projects = projects;
+      next();
+    })
+    .catch(respondWithError);
+};
+
+exports.projectContextProviderById = () => async (req, res, next) => {
+  prisma.project
+    .findOne({
+      where: { id: req.params.id },
+      include: { User: true, Result: true, ExperimentToProject: true },
+    })
+    .then((project) => {
+      req.context.project = project;
       next();
     })
     .catch(respondWithError);
