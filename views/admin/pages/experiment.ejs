@@ -70,7 +70,12 @@
                 <span class="file-icon">
                   <i class="fas fa-download"></i>
                 </span>
-                <span class="file-label"> 파일 다운로드 </span>
+                <a
+                  href="/uploads/<%= experiment.id %>/<%= experiment.fileName %>"
+                  class="file-label"
+                >
+                  파일 다운로드
+                </a>
               </span>
               <span class="file-name"> <%= experiment.fileName %> </span>
             </label>
