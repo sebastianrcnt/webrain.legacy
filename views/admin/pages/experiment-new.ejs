@@ -6,11 +6,15 @@
     <div class="px-3 pb-6">
       <div class="container">
         <h1 class="title">실험 생성하기</h1>
-        <form action="/admin/experiments" method="POST" enctype="multipart/form-data">
+        <form
+          action="/admin/experiments"
+          method="POST"
+          enctype="multipart/form-data"
+        >
           <div class="columns">
             <label for="name" class="column">
               실험명
-              <input type="text" class="input" name="name" id="" required/>
+              <input type="text" class="input" name="name" id="" required />
             </label>
           </div>
           <div class="columns">
@@ -22,21 +26,27 @@
           <div>실험파일 업로드</div>
           <div class="file has-name">
             <label class="file-label">
-              <input class="file-input" type="file" name="experiment-file" accept=".zip" required/>
+              <input
+                class="file-input"
+                type="file"
+                name="experiment-file"
+                accept=".zip"
+                required
+              />
               <span class="file-cta">
                 <span class="file-icon">
                   <i class="fas fa-upload"></i>
                 </span>
                 <span class="file-label"> 파일 고르기... </span>
               </span>
-              <span class="file-name">
-                Screen Shot 2017-07-29 at 15.54.25.png
-              </span>
+              <span class="file-name"> </span>
             </label>
           </div>
           <!-- 모달 끝 -->
           <button class="button is-success is-pulled-right">저장하기</button>
-          <button class="button is-secondary is-pulled-right mr-2">취소하기</button>
+          <button class="button is-secondary is-pulled-right mr-2">
+            취소하기
+          </button>
         </form>
       </div>
     </div>
