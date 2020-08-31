@@ -1,0 +1,12 @@
+{
+  "semi": false,
+  "overrides": [
+    {
+      "files": ["*.ejs"],
+      "options": {
+        "printWidth": 500,
+        "parser": "html"
+      }
+    }
+  ]
+}

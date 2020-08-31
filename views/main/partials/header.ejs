@@ -9,32 +9,26 @@
   </a>
   <nav class="menu-wrap">
     <ul class="sub-menu">
-      <% if (user) { %>
-      <li style="font-size: 1rem; font-weight: 300; color: white;">
-        <%- user ? user.name : null %>님 반갑습니다.
-      </li>
+      <% if (loggedInUser) { %>
+      <li style="font-size: 1rem; font-weight: 300; color: white"><%- loggedInUser ? loggedInUser.name : null %>님 반갑습니다.</li>
       <% } %>
       <li>
-        <% if (user) { %>
-        <a style="font-size: 1rem; font-weight: 300;" href="/api/users/logout"
-          >로그아웃</a
-        >
+        <% if (loggedInUser) { %>
+        <a style="font-size: 1rem; font-weight: 300" href="/main/logout">로그아웃</a>
         <% } else { %>
-        <a style="font-size: 1rem; font-weight: 300;" href="/pages/login"
-          >로그인</a
-        >
+        <a style="font-size: 1rem; font-weight: 300" href="/main/login">로그인</a>
         <% } %>
       </li>
     </ul>
     <ul class="main-menu">
       <li>
-        <a href="/pages/list">실험참여</a>
+        <a href="/main/games">실험참여</a>
       </li>
-      <% if (user.typeId < 3) { %>
+      <% if (loggedInUser) { %> <% if (loggedInUser.level >= 100) { %>
       <li>
-        <a href="/pages/list">관리자 페이지로 이동</a>
+        <a href="/admin">관리자 페이지로 이동</a>
       </li>
-      <% } %>
+      <% } %> <% } %>
     </ul>
   </nav>
 </header>

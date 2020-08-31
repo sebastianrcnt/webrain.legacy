@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko">
-
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>MoNET</title>
@@ -9,12 +8,12 @@
     <!-- jquery -->
     <script src="../js/jquery.min.js"></script>
     <!-- bootstrap -->
-    <link rel="stylesheet" href="../vendor/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../vendor/bootstrap/css/bootstrap.min.css" />
     <!-- Custom fonts -->
-    <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../vendor/simple-line-icons/css/simple-line-icons.css">
+    <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../vendor/simple-line-icons/css/simple-line-icons.css" />
     <!-- toast -->
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css" />
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     <!-- 기본 css -->
     <link rel="stylesheet" href="../css/reset.css" />
@@ -23,252 +22,258 @@
     <link rel="stylesheet" href="../css/common.css" />
     <!-- page css -->
     <link rel="stylesheet" href="../css/project.css" />
-</head>
+  </head>
 
-<body>
+  <body>
     <div class="wrap-all wrap-all-list">
-        <header class="main-header">
-            <div class="logo">
-                <h1><a href="/">MoNET <span class="name">WeBrain</span></a></h1>
-            </div>
-            <a class="mobile-only mobile-menu-trigger">
-                <i class="fas fa-bars"></i>
-            </a>
-            <nav class="menu-wrap">
-                <ul class="sub-menu">
-                    <li><a href="/pages/login.html">Login</a></li>
-                    <li><a href="#">Join</a></li>
-                </ul>
-                <ul class="main-menu">
-                    <li><a href="/pages/list.html">실험참여</a>
-                        <ul class="main-menu-child">
-                            <li><a href="/pages/list.html">참여한실험</a></li>
-                            <li><a href="/pages/list.html">실험소개</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="/pages/result.html">결과화면</a>
-                        <ul class="main-menu-child">
-                            <li><a href="/pages/result.html">개인결과샘플</a></li>
-                            <li><a href="/pages/result-private.html">모든결과샘플</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="#">리워드</a>
-                        <ul class="main-menu-child">
-                            <li><a href="#">서브1</a></li>
-                            <li><a href="#">서브2</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="#">마이페이지</a>
-                        <ul class="main-menu-child">
-                            <li><a href="#">서브1</a></li>
-                            <li><a href="#">서브2</a></li>
-                            <li><a href="#">서브3</a></li>
-                            <li><a href="#">서브4</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </nav>
-        </header>
-        <section class="list-content-section">
-            <div class="list-content-header">
-                <h2><span>MoNET</span>Project</h2>
-                <ul class="list-content-header-ul">
-                    <li class="list-content-header-item list-content-header-active">
-                        <a href="#">Type1</a>
-                    </li>
-                    <li class="list-content-header-item">
-                        <a href="#">Type2</a>
-                    </li>
-                    <li class="list-content-header-item">
-                        <a href="#">Type3</a>
-                    </li>
-                    <li class="list-content-header-item">
-                        <a href="#">Type4</a>
-                    </li>
-                </ul>
-            </div>
+      <header class="main-header">
+        <div class="logo">
+          <h1>
+            <a href="/">MoNET <span class="name">WeBrain</span></a>
+          </h1>
+        </div>
+        <a class="mobile-only mobile-menu-trigger">
+          <i class="fas fa-bars"></i>
+        </a>
+        <nav class="menu-wrap">
+          <ul class="sub-menu">
+            <li><a href="/pages/login.html">Login</a></li>
+            <li><a href="#">Join</a></li>
+          </ul>
+          <ul class="main-menu">
+            <li>
+              <a href="/pages/list.html">실험참여</a>
+              <ul class="main-menu-child">
+                <li><a href="/pages/list.html">참여한실험</a></li>
+                <li><a href="/pages/list.html">실험소개</a></li>
+              </ul>
+            </li>
+            <li>
+              <a href="/pages/result.html">결과화면</a>
+              <ul class="main-menu-child">
+                <li><a href="/pages/result.html">개인결과샘플</a></li>
+                <li><a href="/pages/result-private.html">모든결과샘플</a></li>
+              </ul>
+            </li>
+            <li>
+              <a href="#">리워드</a>
+              <ul class="main-menu-child">
+                <li><a href="#">서브1</a></li>
+                <li><a href="#">서브2</a></li>
+              </ul>
+            </li>
+            <li>
+              <a href="#">마이페이지</a>
+              <ul class="main-menu-child">
+                <li><a href="#">서브1</a></li>
+                <li><a href="#">서브2</a></li>
+                <li><a href="#">서브3</a></li>
+                <li><a href="#">서브4</a></li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+      </header>
+      <section class="list-content-section">
+        <div class="list-content-header">
+          <h2><span>MoNET</span>Project</h2>
+          <ul class="list-content-header-ul">
+            <li class="list-content-header-item list-content-header-active">
+              <a href="#">Type1</a>
+            </li>
+            <li class="list-content-header-item">
+              <a href="#">Type2</a>
+            </li>
+            <li class="list-content-header-item">
+              <a href="#">Type3</a>
+            </li>
+            <li class="list-content-header-item">
+              <a href="#">Type4</a>
+            </li>
+          </ul>
+        </div>
 
-            <!-- 
+        <!-- 
 
             완료된 프로젝트의 경우
             li 엘레먼트에 'completed' class 부여
 
             -->
-            <div class="list-content-container">
-                <ul class="list-content-thumbnail">
-                    <!-- completed-ct: 배경중앙 , completed : 배경 좌상단 -->
-                    <li class="completed">
-                        <div class='pageOption'>
-                            <!-- 이미지만 바꾸면 됨-->
-                            <a href='#' class='option' data-inf='photo'>
-                                <img src='/images/samples/sample1.png'>
-                            </a>
-                            <a href='#' class='option' data-inf='cinema'>
-                                <img src='/images/samples/sample2.png'>
-                            </a>
-                        </div>
-                        <a href="try.html">
-                            <span class="list-content-thumbnail-title">
-                                <span class="item-title">Day 1</span>
-                            <span class="item-text">MoNET Cognition ScienceMoNET Cognition ScienceMoNET Cognition ScienceMoNET Cognition ScienceMoNET Cognition ScienceMoNET Cognition ScienceMoNET Cognition ScienceMoNET Cognition ScienceMoNET Cognition ScienceMoNET Cognition ScienceMoNET Cognition Science</span>
-                            </span>
-                        </a>
-                    </li>
-                    <li class="completed">
-                        <div class='pageOption'>
-                            <!-- 이미지만 바꾸면 됨-->
-                            <a href='#' class='option' data-inf='photo'>
-                                <img src='/images/samples/sample3.png'>
-                            </a>
-                            <a href='#' class='option' data-inf='cinema'>
-                                <img src='/images/samples/sample4.png'>
-                            </a>
-                        </div>
-                        <a href="try.html">
-                            <span class="list-content-thumbnail-title">
-                                <span class="item-title">Day 2</span>
-                            <span class="item-text">MoNET Cognition Science</span>
-                            </span>
-                        </a>
-                    </li>
-                    <li class="locked">
-                        <div class='pageOption'>
-                            <!-- 이미지만 바꾸면 됨-->
-                            <a href='#' class='option' data-inf='photo'>
-                                <img src='/images/samples/sample5.png'>
-                            </a>
-                            <a href='#' class='option' data-inf='cinema'>
-                                <img src='/images/samples/sample6.png'>
-                            </a>
-                        </div>
-                        <a href="try.html">
-                            <span class="list-content-thumbnail-title">
-                                <span class="item-title">Day 3</span>
-                            <span class="item-text">MoNET Cognition Science</span>
-                            </span>
-                        </a>
-                    </li>
-                    <li class="locked">
-                        <div class='pageOption'>
-                            <!-- 이미지만 바꾸면 됨-->
-                            <a href='#' class='option' data-inf='photo'>
-                                <img src='/images/samples/sample7.png'>
-                            </a>
-                            <a href='#' class='option' data-inf='cinema'>
-                                <img src='/images/samples/sample8.png'>
-                            </a>
-                        </div>
-                        <a href="try.html">
-                            <span class="list-content-thumbnail-title">
-                                <span class="item-title">Day 4</span>
-                            <span class="item-text">MoNET Cognition Science</span>
-                            </span>
-                        </a>
-                    </li>
-                    <li>
-                        <div class='pageOption'>
-                            <!-- 이미지만 바꾸면 됨-->
-                            <a href='#' class='option' data-inf='photo'>
-                                <img src='/images/samples/sample9.png'>
-                            </a>
-                            <a href='#' class='option' data-inf='cinema'>
-                                <img src='/images/samples/sample10.png'>
-                            </a>
-                        </div>
-                        <a href="try.html">
-                            <span class="list-content-thumbnail-title">
-                                <span class="item-title">Day 5</span>
-                            <span class="item-text">MoNET Cognition Science</span>
-                            </span>
-                        </a>
-                    </li>
-                    <li class="locked">
-                        <div class='pageOption'>
-                            <!-- 이미지만 바꾸면 됨-->
-                            <a href='#' class='option' data-inf='photo'>
-                                <img src='/images/samples/sample2.png'>
-                            </a>
-                            <a href='#' class='option' data-inf='cinema'>
-                                <img src='/images/samples/sample1.png'>
-                            </a>
-                        </div>
-                        <a href="try.html">
-                            <span class="list-content-thumbnail-title">
-                                <span class="item-title">Day 6</span>
-                            <span class="item-text">MoNET Cognition Science</span>
-                            </span>
-                        </a>
-                    </li>
-                    <li>
-                        <div class='pageOption'>
-                            <!-- 이미지만 바꾸면 됨-->
-                            <a href='#' class='option' data-inf='photo'>
-                                <img src='/images/samples/sample2.png'>
-                            </a>
-                            <a href='#' class='option' data-inf='cinema'>
-                                <img src='/images/samples/sample1.png'>
-                            </a>
-                        </div>
-                        <a href="try.html">
-                            <span class="list-content-thumbnail-title">
-                                <span class="item-title">Day 7</span>
-                            <span class="item-text">MoNET Cognition Science</span>
-                            </span>
-                        </a>
-                    </li>
-                    <li>
-                        <div class='pageOption'>
-                            <!-- 이미지만 바꾸면 됨-->
-                            <a href='#' class='option' data-inf='photo'>
-                                <img src='/images/samples/sample2.png'>
-                            </a>
-                            <a href='#' class='option' data-inf='cinema'>
-                                <img src='/images/samples/sample1.png'>
-                            </a>
-                        </div>
-                        <a href="try.html">
-                            <span class="list-content-thumbnail-title">
-                                <span class="item-title">Day 8</span>
-                            <span class="item-text">MoNET Cognition Science</span>
-                            </span>
-                        </a>
-                    </li>
-                    <li class="locked">
-                        <div class='pageOption'>
-                            <!-- 이미지만 바꾸면 됨-->
-                            <a href='#' class='option' data-inf='photo'>
-                                <img src='/images/samples/sample2.png'>
-                            </a>
-                            <a href='#' class='option' data-inf='cinema'>
-                                <img src='/images/samples/sample1.png'>
-                            </a>
-                        </div>
-                        <a href="try.html">
-                            <span class="list-content-thumbnail-title">
-                                <span class="item-title">Day 9</span>
-                            <span class="item-text">MoNET Cognition Science</span>
-                            </span>
-                        </a>
-                    </li>
-                    <li>
-                        <div class='pageOption'>
-                            <!-- 이미지만 바꾸면 됨-->
-                            <a href='#' class='option' data-inf='photo'>
-                                <img src='/images/samples/sample2.png'>
-                            </a>
-                            <a href='#' class='option' data-inf='cinema'>
-                                <img src='/images/samples/sample1.png'>
-                            </a>
-                        </div>
-                        <a href="try.html">
-                            <span class="list-content-thumbnail-title">
-                                <span class="item-title">Day 10</span>
-                            <span class="item-text">MoNET Cognition Science</span>
-                            </span>
-                        </a>
-                    </li>
-                </ul>
-                <!-- <div class="list-content-pagination">
+        <div class="list-content-container">
+          <ul class="list-content-thumbnail">
+            <!-- completed-ct: 배경중앙 , completed : 배경 좌상단 -->
+            <li class="completed">
+              <div class="pageOption">
+                <!-- 이미지만 바꾸면 됨-->
+                <a href="#" class="option" data-inf="photo">
+                  <img src="/images/samples/sample1.png" />
+                </a>
+                <a href="#" class="option" data-inf="cinema">
+                  <img src="/images/samples/sample2.png" />
+                </a>
+              </div>
+              <a href="try.html">
+                <span class="list-content-thumbnail-title">
+                  <span class="item-title">Day 1</span>
+                  <span class="item-text">MoNET Cognition ScienceMoNET Cognition ScienceMoNET Cognition ScienceMoNET Cognition ScienceMoNET Cognition ScienceMoNET Cognition ScienceMoNET Cognition ScienceMoNET Cognition ScienceMoNET Cognition ScienceMoNET Cognition ScienceMoNET Cognition Science</span>
+                </span>
+              </a>
+            </li>
+            <li class="completed">
+              <div class="pageOption">
+                <!-- 이미지만 바꾸면 됨-->
+                <a href="#" class="option" data-inf="photo">
+                  <img src="/images/samples/sample3.png" />
+                </a>
+                <a href="#" class="option" data-inf="cinema">
+                  <img src="/images/samples/sample4.png" />
+                </a>
+              </div>
+              <a href="try.html">
+                <span class="list-content-thumbnail-title">
+                  <span class="item-title">Day 2</span>
+                  <span class="item-text">MoNET Cognition Science</span>
+                </span>
+              </a>
+            </li>
+            <li class="locked">
+              <div class="pageOption">
+                <!-- 이미지만 바꾸면 됨-->
+                <a href="#" class="option" data-inf="photo">
+                  <img src="/images/samples/sample5.png" />
+                </a>
+                <a href="#" class="option" data-inf="cinema">
+                  <img src="/images/samples/sample6.png" />
+                </a>
+              </div>
+              <a href="try.html">
+                <span class="list-content-thumbnail-title">
+                  <span class="item-title">Day 3</span>
+                  <span class="item-text">MoNET Cognition Science</span>
+                </span>
+              </a>
+            </li>
+            <li class="locked">
+              <div class="pageOption">
+                <!-- 이미지만 바꾸면 됨-->
+                <a href="#" class="option" data-inf="photo">
+                  <img src="/images/samples/sample7.png" />
+                </a>
+                <a href="#" class="option" data-inf="cinema">
+                  <img src="/images/samples/sample8.png" />
+                </a>
+              </div>
+              <a href="try.html">
+                <span class="list-content-thumbnail-title">
+                  <span class="item-title">Day 4</span>
+                  <span class="item-text">MoNET Cognition Science</span>
+                </span>
+              </a>
+            </li>
+            <li>
+              <div class="pageOption">
+                <!-- 이미지만 바꾸면 됨-->
+                <a href="#" class="option" data-inf="photo">
+                  <img src="/images/samples/sample9.png" />
+                </a>
+                <a href="#" class="option" data-inf="cinema">
+                  <img src="/images/samples/sample10.png" />
+                </a>
+              </div>
+              <a href="try.html">
+                <span class="list-content-thumbnail-title">
+                  <span class="item-title">Day 5</span>
+                  <span class="item-text">MoNET Cognition Science</span>
+                </span>
+              </a>
+            </li>
+            <li class="locked">
+              <div class="pageOption">
+                <!-- 이미지만 바꾸면 됨-->
+                <a href="#" class="option" data-inf="photo">
+                  <img src="/images/samples/sample2.png" />
+                </a>
+                <a href="#" class="option" data-inf="cinema">
+                  <img src="/images/samples/sample1.png" />
+                </a>
+              </div>
+              <a href="try.html">
+                <span class="list-content-thumbnail-title">
+                  <span class="item-title">Day 6</span>
+                  <span class="item-text">MoNET Cognition Science</span>
+                </span>
+              </a>
+            </li>
+            <li>
+              <div class="pageOption">
+                <!-- 이미지만 바꾸면 됨-->
+                <a href="#" class="option" data-inf="photo">
+                  <img src="/images/samples/sample2.png" />
+                </a>
+                <a href="#" class="option" data-inf="cinema">
+                  <img src="/images/samples/sample1.png" />
+                </a>
+              </div>
+              <a href="try.html">
+                <span class="list-content-thumbnail-title">
+                  <span class="item-title">Day 7</span>
+                  <span class="item-text">MoNET Cognition Science</span>
+                </span>
+              </a>
+            </li>
+            <li>
+              <div class="pageOption">
+                <!-- 이미지만 바꾸면 됨-->
+                <a href="#" class="option" data-inf="photo">
+                  <img src="/images/samples/sample2.png" />
+                </a>
+                <a href="#" class="option" data-inf="cinema">
+                  <img src="/images/samples/sample1.png" />
+                </a>
+              </div>
+              <a href="try.html">
+                <span class="list-content-thumbnail-title">
+                  <span class="item-title">Day 8</span>
+                  <span class="item-text">MoNET Cognition Science</span>
+                </span>
+              </a>
+            </li>
+            <li class="locked">
+              <div class="pageOption">
+                <!-- 이미지만 바꾸면 됨-->
+                <a href="#" class="option" data-inf="photo">
+                  <img src="/images/samples/sample2.png" />
+                </a>
+                <a href="#" class="option" data-inf="cinema">
+                  <img src="/images/samples/sample1.png" />
+                </a>
+              </div>
+              <a href="try.html">
+                <span class="list-content-thumbnail-title">
+                  <span class="item-title">Day 9</span>
+                  <span class="item-text">MoNET Cognition Science</span>
+                </span>
+              </a>
+            </li>
+            <li>
+              <div class="pageOption">
+                <!-- 이미지만 바꾸면 됨-->
+                <a href="#" class="option" data-inf="photo">
+                  <img src="/images/samples/sample2.png" />
+                </a>
+                <a href="#" class="option" data-inf="cinema">
+                  <img src="/images/samples/sample1.png" />
+                </a>
+              </div>
+              <a href="try.html">
+                <span class="list-content-thumbnail-title">
+                  <span class="item-title">Day 10</span>
+                  <span class="item-text">MoNET Cognition Science</span>
+                </span>
+              </a>
+            </li>
+          </ul>
+          <!-- <div class="list-content-pagination">
                     <nav aria-label="...">
                         <ul class="pagination">
                             <li class="page-item disabled">
@@ -287,10 +292,9 @@
                         </ul>
                     </nav>
                 </div> -->
-
-            </div>
-            <!-- 게임 테이블 -->
-            <!-- <div class="list-table-container">
+        </div>
+        <!-- 게임 테이블 -->
+        <!-- <div class="list-table-container">
                 <div class="not-done">
                     <h3><i class="fas fa-caret-square-right"></i>미완료한 게임</h3>
                    
@@ -361,22 +365,21 @@
     </div>
 
     </div> -->
-        </section>
-        <!-- login contents end -->
-        <footer class="main-footer">
-            <div class="info">
-                <a href="#">연세대학교</a>
-                <a href="tel:020000000">T 02. 000. 0000 </a>
-                <a href="#">F 02. 000. 0000 </a>
-                <a href="#">개인정보취급방침</a>
-            </div>
-            <div class="copy">
-                Copyright MoNET. Lab, Yonsei University All Rights Reserved
-            </div>
-        </footer>
-        <script src="../js/basic.js" defer></script>
-        <script src="../js/project.js" defer></script>
+      </section>
+      <!-- login contents end -->
+      <footer class="main-footer">
+        <div class="info">
+          <a href="#">연세대학교</a>
+          <a href="tel:020000000">T 02. 000. 0000 </a>
+          <a href="#">F 02. 000. 0000 </a>
+          <a href="#">개인정보취급방침</a>
+        </div>
+        <div class="copy">
+          Copyright MoNET. Lab, Yonsei University All Rights Reserved
+        </div>
+      </footer>
+      <script src="../js/basic.js" defer></script>
+      <script src="../js/project.js" defer></script>
     </div>
-</body>
-
+  </body>
 </html>

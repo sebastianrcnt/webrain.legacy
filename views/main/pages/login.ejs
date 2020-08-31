@@ -8,31 +8,19 @@
       <!-- login contents start -->
       <section class="section section-1">
         <div class="login-form">
-          <form method="post" name="login-form">
+          <form action="/main/login" method="post" name="login-form">
             <div class="id-input item-input">
               <label for="id">이메일</label>
-              <input
-                type="text"
-                name="email"
-                id="email"
-                placeholder="이메일을 입력하세요"
-                autofocus
-              />
+              <input type="email" name="email" id="email" required placeholder="이메일을 입력하세요" autofocus />
             </div>
             <div class="password-input item-input">
               <label for="password">비밀번호</label>
-              <input
-                type="password"
-                name="password"
-                id="password"
-                placeholder="비밀번호를 입력하세요"
-                autofocus
-              />
+              <input type="password" name="password" id="password" placeholder="비밀번호를 입력하세요" required />
             </div>
             <input type="submit" value="로그인" class="login-btn" />
           </form>
           <div class="help">
-            <a href="/pages/register">회원가입</a>
+            <a href="/main/register">회원가입</a>
           </div>
         </div>
       </section>
@@ -41,32 +29,6 @@
       <% include ../partials/footer %>
     </div>
     <script src="../js/basic.js"></script>
-    <script type="text/javascript">
-      $(document).ready(() => {
-        $("form[name=login-form]").on("submit", (e) => {
-          e.preventDefault();
-          const arr = $("form[name=login-form]").serializeArray();
-          let data = {
-            email: arr[0].value,
-            password: arr[1].value,
-          };
-          $.ajax({
-            url: "/api/users/login",
-            method: "POST",
-            data,
-          })
-            .done((token) => {
-              localStorage.setItem("webbrain-user-token", token);
-              alert("로그인에 성공했습니다");
-            })
-            .fail(() => {
-              alert("로그인에 실패했습니다.");
-            })
-            .always((res) => {
-              console.log(res);
-            });
-        });
-      });
-    </script>
+    <script type="text/javascript"></script>
   </body>
 </html>

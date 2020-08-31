@@ -7,42 +7,32 @@
       <% include ../partials/header %>
       <!-- login contents start -->
       <section class="section section-1">
-        <div class="login-form">
+        <div action="/main/register" method="POST" class="login-form">
           <form method="post" name="login-form">
             <div class="item-input">
               <label for="email">이메일</label>
-              <input
-                type="email"
-                name="email"
-                id="email"
-                placeholder="이메일을 입력하세요"
-                autofocus
-              />
+              <input type="email" name="email" id="email" placeholder="이메일을 입력하세요" autofocus />
             </div>
             <div class="item-input">
               <label for="name">이름</label>
-              <input
-                type="text"
-                name="name"
-                id="name"
-                placeholder="아이디를 입력하세요"
-                autofocus
-              />
+              <input type="text" name="name" id="name" placeholder="이름을 입력하세요" autofocus />
+            </div>
+            <div class="item-input">
+              <label for="phone">전화번호</label>
+              <input type="phone" name="phone" id="name" placeholder="전화번호를 입력하세요" autofocus />
             </div>
             <div class="item-input">
               <label for="password">비밀번호</label>
-              <input
-                type="password"
-                name="password"
-                id="password"
-                placeholder="비밀번호를 입력하세요"
-                autofocus
-              />
+              <input type="password" name="password" id="password" placeholder="비밀번호를 입력하세요" autofocus />
+            </div>
+            <div class="item-input">
+              <label for="password2">비밀번호 확인</label>
+              <input type="password" name="password2" id="password" placeholder="비밀번호 확인" autofocus />
             </div>
             <input type="submit" value="회원가입" class="login-btn" />
           </form>
           <div class="help">
-            <a href="/pages/login">로그인</a>
+            <a href="/main/login">로그인</a>
           </div>
         </div>
       </section>
@@ -51,29 +41,5 @@
       <% include ../partials/footer %>
     </div>
     <script src="../js/basic.js"></script>
-    <script type="text/javascript">
-      $(document).ready(() => {
-        $("form[name=login-form]").on("submit", (e) => {
-          e.preventDefault();
-          const arr = $("form[name=login-form]").serializeArray();
-          const data = make(arr);
-          console.log(data);
-          $.ajax({
-            url: "/api/users/register",
-            method: "POST",
-            data,
-          })
-            .done(() => {
-              alert("성공적으로 가입되었습니다.");
-            })
-            .fail(() => {
-              alert("회원가입에 실패했습니다");
-            })
-            .always((res) => {
-              console.log(res); // TODO - delete
-            });
-        });
-      });
-    </script>
   </body>
 </html>

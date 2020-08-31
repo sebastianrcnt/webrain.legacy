@@ -10,49 +10,27 @@
           <div class="columns">
             <label for="name" class="column">
               실험 ID
-              <input
-                type="text"
-                class="input"
-                name="name"
-                id=""
-                value="<%- experiment.id %> "
-                disabled
-              />
+              <input type="text" class="input" name="name" id="" value="<%- experiment.id %> " disabled />
             </label>
           </div>
 
           <div class="columns">
             <label for="name" class="column">
               소유자
-              <input
-                type="text"
-                class="input"
-                name="name"
-                id=""
-                value="<%= experiment.userEmail %>"
-                disabled
-              />
+              <input type="text" class="input" name="name" id="" value="<%= experiment.userEmail %>" disabled />
             </label>
           </div>
 
           <div class="columns">
             <label for="name" class="column">
               실험명
-              <input
-                type="text"
-                class="input"
-                name="name"
-                value="<%- experiment.name %>"
-                id=""
-              />
+              <input type="text" class="input" name="name" value="<%- experiment.name %>" id="" />
             </label>
           </div>
           <div class="columns">
             <label for="" class="column is-desktop">
               실험 설명
-              <textarea class="textarea">
-<%- experiment.description %></textarea
-              >
+              <textarea class="textarea"><%- experiment.description %></textarea>
             </label>
           </div>
           <div class="columns">
@@ -70,10 +48,7 @@
                 <span class="file-icon">
                   <i class="fas fa-download"></i>
                 </span>
-                <a
-                  href="/uploads/<%= experiment.id %>/<%= experiment.fileName %>"
-                  class="file-label"
-                >
+                <a href="/uploads/<%= experiment.id %>/<%= experiment.fileName %>" class="file-label">
                   파일 다운로드
                 </a>
               </span>
@@ -84,11 +59,7 @@
           <button type="submit" class="button is-success is-pulled-right">
             저장하기
           </button>
-          <button
-            id="delete-this-experiment"
-            type="button"
-            class="button is-danger is-pulled-right mr-2"
-          >
+          <button id="delete-this-experiment" type="button" class="button is-danger is-pulled-right mr-2">
             삭제하기
           </button>
         </form>
@@ -97,11 +68,8 @@
   </body>
   <script>
     $(document).ready(() => {
-      $("#search-experiments").DataTable();
-      $("#qr").attr(
-        "url",
-        "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=somedata"
-      );
+      $("#search-experiments").DataTable()
+      $("#qr").attr("url", "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=somedata")
       $("#delete-this-experiment").on("click", () => {
         if (confirm("정말로 삭제하시겠습니까?")) {
           $.ajax({
@@ -109,17 +77,17 @@
             method: "DELETE",
           })
             .done(() => {
-              alert("삭제되었습니다.");
-              window.location.href = "/admin/experiments";
+              alert("삭제되었습니다.")
+              window.location.href = "/admin/experiments"
             })
             .fail(() => {
-              alert("삭제에 실패했습니다.");
+              alert("삭제에 실패했습니다.")
             })
             .always((response) => {
-              console.log(response);
-            });
+              console.log(response)
+            })
         }
-      });
-    });
+      })
+    })
   </script>
 </html>

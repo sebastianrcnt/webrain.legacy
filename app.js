@@ -24,6 +24,8 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 // Create Context
 app.use((req, res, next) => {
   req.context = {};
+  req.user = null;
+  req.context.loggedInUser = null;
   next();
 });
 
