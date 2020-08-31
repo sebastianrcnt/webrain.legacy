@@ -59,7 +59,7 @@
       };
 
       const videoStimulusHtml = (stimulus) => {
-        return `<video autoplay="autoplay"><source src="<%= game.Experiment.id %>/<%= game.Experiment.fileName.split('.').slice(0, -1).join('.') %>/${stimulus.filePath}"></video>`;
+        return `<video autoplay="autoplay"><source src="/uploads/<%= game.Experiment.id %>/<%= game.Experiment.fileName.split('.').slice(0, -1).join('.') %>/${stimulus.filePath}"></video>`;
       };
 
       const stimulusHtml = (stimulus) => {
