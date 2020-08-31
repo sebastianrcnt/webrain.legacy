@@ -22,6 +22,20 @@
       let store = [];
 
       window.store = store;
+      let StimulusType = {};
+      StimulusType["IMAGE"] = "image";
+      StimulusType["TEXT"] = "text";
+      StimulusType["TEXT_FILE"] = "text_file";
+      StimulusType["AUDIO"] = "audio";
+      StimulusType["VIDEO"] = "video";
+      StimulusType["INSTRUCTION"] = "instruction";
+      StimulusType["RESULT"] = "result";
+      let FeedbackType = {};
+      FeedbackType["NONE"] = "n";
+      FeedbackType["TRUE_OR_FALSE"] = "tf";
+      FeedbackType["ALWAYS"] = "a";
+      FeedbackType["CHOICE"] = "c";
+
       // Components
       const style = (fontSize, fontColor) => {
         let sb = "";
@@ -40,7 +54,129 @@
         return `<img src="/uploads/<%= game.Experiment.id %>/<%= game.Experiment.fileName.split('.').slice(0, -1).join('.') %>/${stimulus.filePath}" >`;
       };
 
-      document.write(imgStimulusHtml({ filePath: "img/1.png" }));
+      const audioStimulusHtml = (stimulus) => {
+        return `<audio autoplay><source src="/uploads/<%= game.Experiment.id %>/<%= game.Experiment.fileName.split('.').slice(0, -1).join('.') %>/${stimulus.filePath}"></audio>`;
+      };
+
+      const videoStimulusHtml = (stimulus) => {
+        return `<video autoplay="autoplay"><source src="<%= game.Experiment.id %>/<%= game.Experiment.fileName.split('.').slice(0, -1).join('.') %>/${stimulus.filePath}"></video>`;
+      };
+
+      const stimulusHtml = (stimulus) => {
+        switch (stimulus.stimulusType) {
+          case StimulusType.TEXT:
+            return textStimulusHtml(stimulus);
+          case StimulusType.IMAGE:
+            return imgStimulusHtml(stimulus);
+          case StimulusType.AUDIO:
+            return audioStimulusHtml(stimulus);
+          case StimulusType.VIDEO:
+            return videoStimulusHtml(stimulus);
+          default:
+            throw new Error(
+              `Asset ${stimulus.stimulusType} is Unsupported Yet.`
+            );
+        }
+      };
+
+      // BufferCreator
+      const BufferConstructor = (sequence) => ({
+        type: sequence.choices
+          ? "html-button-response"
+          : "html-keyboard-response",
+        stimulus: () => {
+          // switch (sequence.stimulus.stimulusType) {
+          //   case StimulusType.TEXT:
+          //     return textStimulusHtml(sequence.stimulus);
+          //   case StimulusType.IMAGE:
+          //     return imgStimulusHtml(sequence.stimulus);
+          //   default:
+          //     throw new Error(
+          //       `Asset ${sequence.stimulus.stimulusType} is Unsupported Yet.`
+          //     );
+          // }
+          return stimulusHtml(sequence.stimulus);
+        },
+        stimulus_duration: sequence.stimulusDuration,
+        trial_duration:
+          sequence.reactionTime || sequence.stimulusDuration || null,
+        choices: sequence.choices ? sequence.choices.map(stimulusHtml) : null,
+        correct_response: sequence.answer,
+        test_part: "test",
+        on_load: (d) => {},
+        on_finish: (d) => {
+          d.correct_answer = sequence.answer;
+          d.choices = sequence.choices;
+          store.push(d);
+        },
+      });
+
+      const FeedbackConstructor = (sequence) => {
+        switch (sequence.feedbackType) {
+          case FeedbackType.ALWAYS:
+            return {
+              type: "html-keyboard-response",
+              stimulus: stimulusHtml(sequence.feedback1),
+              stimulus_duration: sequence.feedbackDuration || null,
+              trial_duration: sequence.feedbackDuration || null,
+              response_ends_trial: false,
+            };
+          case FeedbackType.CHOICE:
+            return {
+              type: "html-keyboard-response",
+              stimulus: () => {
+                const choice = jsPsych.data.get().last(1).values()[0].choices[
+                  jsPsych.data.get().last(1).values()[0].button_pressed
+                ];
+                return choice ? stimulusHtml(choice) : "<p>no choice</p>";
+              },
+              stimulus_duration: sequence.feedbackDuration || null,
+              trial_duration: sequence.feedbackDuration || null,
+              response_ends_trial: false,
+            };
+          case FeedbackType.TRUE_OR_FALSE:
+            return [
+              {
+                timeline: [
+                  {
+                    type: "html-keyboard-response",
+                    stimulus: stimulusHtml(sequence.feedback1),
+                    stimulus_duration: sequence.feedbackDuration || null,
+                    trial_duration: sequence.feedbackDuration || null,
+                    response_ends_trial: false,
+                  },
+                ],
+                conditional_function: () => {
+                  const data = jsPsych.data.get().last(1).values()[0];
+                  console.log(data.button_pressed == data.correct_answer);
+                  return data.button_pressed == data.correct_answer;
+                },
+              },
+              {
+                timeline: [
+                  {
+                    type: "html-keyboard-response",
+                    stimulus: stimulusHtml(sequence.feedback2),
+                    stimulus_duration: sequence.feedbackDuration || null,
+                    trial_duration: sequence.feedbackDuration || null,
+                    response_ends_trial: false,
+                  },
+                ],
+                conditional_function: () => {
+                  const data = jsPsych.data.get().last(1).values()[0];
+                  console.log(data.button_pressed == data.correct_answer);
+                  return data.button_pressed != data.correct_answer;
+                },
+              },
+            ];
+          case FeedbackType.NONE:
+            return [];
+          default:
+            throw new Error(
+              "존재하지 않는 Feedbacy Type입니다." + sequence.feedbackType
+            );
+        }
+      };
 
       (async () => {
         try {
@@ -54,8 +190,26 @@
 
           // For
           for (let sequence of entireSequence) {
-            const stimulus = sequence.stimulus;
+            const buffer = BufferConstructor(sequence);
+            timeline.push(buffer);
+            const feedback = FeedbackConstructor(sequence);
+            if (Array.isArray(feedback)) {
+              for (let f of feedback) {
+                timeline.push(f);
+              }
+            } else {
+              timeline.push(feedback);
+            }
           }
+
+          let timer = 0;
+          setInterval(() => {
+            timer += 0.01;
+            document.getElementById("time-indicator");
+          }, 10);
+          jsPsych.init({
+            timeline,
+          });
         } catch (error) {
           console.log(error.stack);
         }

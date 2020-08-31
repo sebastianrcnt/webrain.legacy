@@ -217,7 +217,8 @@ class Parser {
         break;
       case StimulusType.AUDIO:
       case StimulusType.VIDEO:
-        var [filePath] = tokens;
+        console.log(left);
+        var [filePath] = left;
         stimulus = { ...stimulus, filePath };
         break;
       default:
