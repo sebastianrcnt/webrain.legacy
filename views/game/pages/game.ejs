@@ -2,8 +2,64 @@
 <html lang="en">
   <% include ../partials/head %>
   <body>
-    <pre>
-      <code> <%= JSON.stringify(game, null, 4) %> </code>
-    </pre>
+    <div id="time-indicator"></div>
+    <style>
+      #time-indicator {
+        position: fixed;
+        top: 0;
+      }
+    </style>
+    <script>
+      const gameId = "<%= game.id %>";
+      window.results = {
+        startTimeList: [],
+        endTimeList: [],
+      };
+
+      let timeline = [];
+      window.timeline = timeline;
+
+      let store = [];
+
+      window.store = store;
+      // Components
+      const style = (fontSize, fontColor) => {
+        let sb = "";
+        if (fontSize) sb += `font-size:${fontSize}px;`;
+        if (fontColor) sb += `color:${fontColor};`;
+        return sb;
+      };
+
+      const textStimulusHtml = (stimulus) => {
+        return `<p style="${style(stimulus.fontSize, stimulus.fontColor)}">${
+          stimulus.content
+        }</p>`;
+      };
+
+      const imgStimulusHtml = (stimulus) => {
+        return `<img src="/uploads/<%= game.Experiment.id %>/<%= game.Experiment.fileName.split('.').slice(0, -1).join('.') %>/${stimulus.filePath}" >`;
+      };
+
+      document.write(imgStimulusHtml({ filePath: "img/1.png" }));
+
+      (async () => {
+        try {
+          const { data: gameData } = await axios.get(`/api/game/${gameId}`);
+          const entireSequence = [
+            ...gameData.sequences.pre_sequence,
+            ...gameData.sequences.main_sequence,
+            ...gameData.sequences.post_sequence,
+          ];
+          console.log(entireSequence);
+
+          // For
+          for (let sequence of entireSequence) {
+            const stimulus = sequence.stimulus;
+          }
+        } catch (error) {
+          console.log(error.stack);
+        }
+      })();
+    </script>
   </body>
 </html>
