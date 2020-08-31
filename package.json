@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "PORT=2020 nodemon ./bin/www",
+    "start": "node ./bin/www",
     "migrate": "prisma migrate save --experimental && prisma migrate up --experimental",
     "generate": "prisma generate"
   },
