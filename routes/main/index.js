@@ -58,4 +58,8 @@ MainRouter.get(
       .catch(respondWithError(res))
   })
 
+MainRouter.all("/", (req, res) => {
+  res.redirect("/main/games")
+})
+
 module.exports = MainRouter

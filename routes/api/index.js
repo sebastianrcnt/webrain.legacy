@@ -4,6 +4,8 @@ const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 const jwt = require("jsonwebtoken");
 const respondWithError = require("../../middlewares/error");
+const fs = require('fs')
+const path = require('path')
 
 // ApiRouter.use('/api/:name', (req, res) => {
 //   const name = req.params.name;
@@ -120,4 +122,17 @@ ApiRouter.post("/game/:id", (req, res) => {
   }
 });
 
+ApiRouter.get("/download/game/:id", (req, res) => {
+  const {id} = req.params;
+  prisma.result
+    .findOne({
+      where: { id },
+    }).then(result => {
+      fs.writeFileSync(`json/result.json`, JSON.stringify(JSON.parse(result.json), null, 4))
+      res.download(path.resolve('json/result.json'))
+    }).catch((err) => {
+      console.error(err)
+      res.sendStatus(404)
+    })
+})
 module.exports = ApiRouter;

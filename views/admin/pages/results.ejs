@@ -14,7 +14,6 @@
                 <th>참여자</th>
                 <th>프로젝트</th>
                 <th>실험</th>
-                <th>참여일시</th>
                 <th>액션</th>
               </tr>
             </thead>
@@ -37,9 +36,8 @@
                     <%= result.Experiment.name %>
                   </a>
                 </td>
-                <td>2020.03.05</td>
                 <td>
-                  <a class="button is-primary is-small is-centered"> <i class="fa fa-download mr-1"></i>결과다운 </a>
+                  <a href="/api/download/game/<%= result.id %>"class="button is-primary is-small is-centered"> <i class="fa fa-download mr-1"></i>결과다운(json) </a>
                   <a href="/game/<%= result.id %>" class="button is-success is-small is-centered"> <i class="fa fa-link mr-1"></i>실험링크 </a>
                   <button data-result-id="<%= result.id %>" type="button" class="button delete-result-button is-danger is-small is-centered"><i class="fa fa-trash mr-1"></i>삭제</button>
                 </td>
