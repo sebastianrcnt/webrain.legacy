@@ -46,7 +46,7 @@ ApiRouter.get("/process/connect-experiment-to-project", (req, res) => {
       .update({
         where: { id: projectId },
         data: {
-          Experiments: {
+          Experiment: {
             connect: [{ id: experimentId }],
           },
         },
@@ -67,7 +67,7 @@ ApiRouter.get("/process/disconnect-experiment-to-project", (req, res) => {
       .update({
         where: { id: projectId },
         data: {
-          Experiments: {
+          Experiment: {
             disconnect: [{ id: experimentId }],
           },
         },

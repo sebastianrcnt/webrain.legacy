@@ -77,8 +77,8 @@ exports.provideProjectContextById = () => async (req, res, next) => {
       where: { id: req.params.id },
       include: {
         User: true,
-        Results: true,
-        Experiments: { include: { User: true } },
+        Result: true,
+        Experiment: { include: { User: true } },
       },
     })
     .then((project) => {

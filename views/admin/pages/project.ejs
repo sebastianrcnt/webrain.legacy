@@ -62,7 +62,7 @@
           </div>
           <% const myExperiments = experiments.filter(e => e.User.email ===
           loggedInUser.email) %> <% const projectExperimentIds =
-          project.Experiments.map(e => e.id) %> <% const unSelectedExperiments =
+          project.Experiment.map(e => e.id) %> <% const unSelectedExperiments =
           myExperiments.filter(e => !projectExperimentIds.includes(e.id)) %>
           <h2>등록된 실험</h2>
           <table
@@ -77,7 +77,7 @@
               </tr>
             </thead>
             <tbody>
-              <% for( let experiment of project.Experiments ) { %>
+              <% for( let experiment of project.Experiment ) { %>
               <tr>
                 <td>
                   <a href="/admin/experiments/<%= experiment.id %>">

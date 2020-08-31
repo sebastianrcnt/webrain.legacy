@@ -25,9 +25,9 @@ const createUser = async (req, res, next) => {
   UsersService.createUser(req.body)
     .then((user) => {
       res.render("utils/message-with-link", {
-        message: "회원가입이 완료되었습니다.",
-        link: "/admin/projects",
-        linkname: "대시보드로 이동",
+        message: "회원가입이 완료되었습니다. 로그인하세요.",
+        link: "/admin/login",
+        linkname: "로그인하기",
       });
     })
     .catch(respondWithError(res));

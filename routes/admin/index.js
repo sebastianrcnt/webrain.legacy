@@ -9,6 +9,8 @@ const multer = require("multer");
 const ExperimentControllers = require("../../controllers/experiments");
 const shortid = require("shortid");
 const fs = require("fs");
+const rimraf = require("rimraf");
+const path = require("path");
 
 const upload = multer({
   storage: multer.diskStorage({
@@ -99,7 +101,16 @@ AdminRouter.get(
     prisma.experiment
       .delete({ where: { id: req.params.id } })
       .then((experiment) => {
-        res.status(200).json("성공적으로 삭제되었습니다");
+        rimraf(
+          path.resolve(path.join("uploads", experiment.id)),
+          async (error) => {
+            if (error) {
+              console.log(error);
+              throw error;
+            }
+            res.status(200).json("성공적으로 삭제되었습니다");
+          }
+        );
       })
       .catch((err) => {
         console.log(err);
@@ -188,10 +199,10 @@ AdminRouter.get(
     try {
       const targetProject = await prisma.project.findOne({
         where: { id: project },
-        include: { Experiments: true },
+        include: { Experiment: true },
       });
 
-      let queue = targetProject.Experiments.map((experiment) => {
+      let queue = targetProject.Experiment.map((experiment) => {
         return prisma.result.create({
           data: {
             id: shortid.generate(),

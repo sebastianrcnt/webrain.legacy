@@ -16,19 +16,19 @@ model Experiment {
   fileName    String?
   json        String?   @default("{}")
   User        User?     @relation(fields: [userEmail], references: [email])
-  Results     Result[]
-  Projects    Project[]
+  Result      Result[]
+  Project     Project[]
 }
 
 model User {
-  email       String       @default("unset@monet.com") @id
-  name        String       @default("unset")
-  phone       String?
-  password    String?      @default("unset")
-  level       Int          @default(0)
-  Experiments Experiment[]
-  Projects    Project[]
-  Results     Result[]
+  email      String       @default("unset@monet.com") @id
+  name       String       @default("unset")
+  phone      String?
+  password   String?      @default("unset")
+  level      Int          @default(0)
+  Experiment Experiment[]
+  Project    Project[]
+  Result     Result[]
 }
 
 model Project {
@@ -39,17 +39,17 @@ model Project {
   userEmail   String?
   name        String?
   User        User?        @relation(fields: [userEmail], references: [email])
-  Results     Result[]
-  Experiments Experiment[]
+  Result      Result[]
+  Experiment  Experiment[]
 }
 
 model Result {
   experimentId String?
   projectId    String?
-  userEmail    String?
   timestamp    String?
   id           String      @default("unset") @id
   done         Int         @default(0)
+  userEmail    String?
   Experiment   Experiment? @relation(fields: [experimentId], references: [id])
   Project      Project?    @relation(fields: [projectId], references: [id])
   User         User?       @relation(fields: [userEmail], references: [email])
