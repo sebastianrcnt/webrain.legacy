@@ -4,7 +4,7 @@ generator client {
 
 datasource db {
   provider = "sqlite"
-  url      = "file:./data.db"
+  url      = "file:../data.db"
 }
 
 model Experiment {
@@ -50,8 +50,8 @@ model Result {
   id           String      @default("unset") @id
   done         Int         @default(0)
   userEmail    String?
+  json         String?     @default("{}")
   Experiment   Experiment? @relation(fields: [experimentId], references: [id])
   Project      Project?    @relation(fields: [projectId], references: [id])
   User         User?       @relation(fields: [userEmail], references: [email])
-  json         String?     @default("{}")
 }
