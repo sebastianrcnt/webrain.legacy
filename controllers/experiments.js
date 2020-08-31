@@ -1,9 +1,11 @@
 const extract = require("extract-zip");
 const respondWithError = require("../middlewares/error");
-const { resolve } = require("path");
+const path = require("path");
 const { PrismaClient } = require("@prisma/client");
 const { transformDocument } = require("@prisma/client/runtime");
 const prisma = new PrismaClient();
+const fs = require("fs");
+const Parser = require("../parser/parser.js");
 
 const createExperiment = async (req, res) => {
   const { fieldname, originalname, destination, filename } = req.file;
@@ -15,10 +17,10 @@ const createExperiment = async (req, res) => {
   });
 
   const extractZip = (req) =>
-    new Promise((resolve_promise, reject) => {
-      extract(req.file.path, { dir: resolve(req.file.destination) })
-        .then(() => {
-          resolve_promise(req);
+    new Promise((resolve, reject) => {
+      extract(req.file.path, { dir: path.resolve(req.file.destination) })
+        .then((value) => {
+          resolve(req);
         })
         .catch((err) => {
           console.log(err);
@@ -28,6 +30,30 @@ const createExperiment = async (req, res) => {
           };
         });
     });
+
+  const parseJson = (req) => {
+    try {
+      const data = fs.readFileSync(
+        // join(resolve(req.file.destination)),
+        path.join(
+          path.resolve(req.file.destination),
+          path.parse(filename).name,
+          "exp.txt"
+        ),
+        "utf-8"
+      );
+      const parser = new Parser(data);
+      const result = parser.execute().json();
+      req.parseResultJson = result;
+      return Promise.resolve(req);
+    } catch (err) {
+      console.log(err);
+      throw {
+        intended: true,
+        message: "파싱하는 과정에서 오류가 발생했습니다.",
+      };
+    }
+  };
 
   const writeToDatabase = (req) => {
     prisma.experiment
@@ -39,10 +65,10 @@ const createExperiment = async (req, res) => {
           description: req.body.description,
           fileId: req.fileId,
           fileName: req.file.originalname,
+          json: req.parseResultJson,
         },
       })
       .then((experiment) => {
-        console.log("experiment created", experiment);
         res.render("utils/message-with-link", {
           message: "생성이 완료되었습니다",
           link: "/admin/experiments",
@@ -55,7 +81,10 @@ const createExperiment = async (req, res) => {
       });
   };
 
-  extractZip(req).then(writeToDatabase).catch(respondWithError(res));
+  extractZip(req)
+    .then(parseJson)
+    .then(writeToDatabase)
+    .catch(respondWithError(res));
 };
 
 const ExperimentControllers = { createExperiment };

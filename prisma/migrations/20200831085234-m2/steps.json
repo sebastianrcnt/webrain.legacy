@@ -1,0 +1,40 @@
+{
+  "version": "0.3.14-fixed",
+  "steps": [
+    {
+      "tag": "CreateField",
+      "model": "Experiment",
+      "field": "Project",
+      "type": "Project",
+      "arity": "List"
+    },
+    {
+      "tag": "DeleteField",
+      "model": "Experiment",
+      "field": "Projects"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "Result",
+          "field": "json"
+        },
+        "directive": "unique"
+      }
+    },
+    {
+      "tag": "CreateField",
+      "model": "Project",
+      "field": "Experiment",
+      "type": "Experiment",
+      "arity": "List"
+    },
+    {
+      "tag": "DeleteField",
+      "model": "Project",
+      "field": "Experiments"
+    }
+  ]
+}

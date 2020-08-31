@@ -3,12 +3,15 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "nodemon ./bin/www"
+    "start": "PORT=2020 nodemon ./bin/www",
+    "migrate": "prisma migrate save --experimental && prisma migrate up --experimental",
+    "generate": "prisma generate"
   },
   "dependencies": {
     "@prisma/client": "^2.5.1",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
+    "decompress": "^4.2.1",
     "ejs": "~2.6.1",
     "express": "~4.16.1",
     "extract-zip": "^2.0.1",

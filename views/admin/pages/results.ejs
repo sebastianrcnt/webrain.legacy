@@ -13,6 +13,7 @@
           >
             <thead>
               <tr>
+                <th>ID</th>
                 <th>참여자</th>
                 <th>프로젝트</th>
                 <th>실험</th>
@@ -23,6 +24,7 @@
             <tbody class="is-vcentered">
               <% for( let result of results ) { %>
               <tr>
+                <td><%= result.id %></td>
                 <td>
                   <a href="/admin/users/<%= result.User.email %>">
                     <%= result.User.name %>
@@ -42,6 +44,10 @@
                 <td>
                   <a class="button is-primary is-small is-centered">
                     <i class="fa fa-download mr-1"></i>결과다운
+                  </a>
+                  <!-- TODO: 링크 넣기 -->
+                  <a class="button is-success is-small is-centered">
+                    <i class="fa fa-link mr-1"></i>실험링크
                   </a>
                   <button
                     data-result-id="<%= result.id %>"

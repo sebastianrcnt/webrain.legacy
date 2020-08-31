@@ -81,4 +81,28 @@ ApiRouter.get("/process/disconnect-experiment-to-project", (req, res) => {
   }
 });
 
+ApiRouter.get("/game/:id", (req, res) => {
+  const { id } = req.params;
+  prisma.result
+    .findOne({
+      where: { id },
+      include: {
+        Experiment: true,
+        Project: true,
+        User: true,
+      },
+    })
+    .then((result) => {
+      if (result) {
+        res.json(JSON.parse(result.Experiment.json));
+      } else {
+        throw {
+          intended: true,
+          message: "게임을 찾을 수 없습니다",
+        };
+      }
+    })
+    .catch(respondWithError);
+});
+
 module.exports = ApiRouter;

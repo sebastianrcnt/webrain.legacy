@@ -173,7 +173,7 @@ AdminRouter.get(
   )
   .delete("/results/:id", (req, res) => {
     prisma.result
-      .delete({ where: { id: +req.params.id } })
+      .delete({ where: { id: req.params.id } })
       .then((result) => {
         res.status(200).json("성공적으로 삭제되었습니다");
       })
@@ -194,6 +194,7 @@ AdminRouter.get(
       let queue = targetProject.Experiments.map((experiment) => {
         return prisma.result.create({
           data: {
+            id: shortid.generate(),
             User: { connect: { email: user } },
             Project: { connect: { id: project } },
             Experiment: { connect: { id: experiment.id } },
