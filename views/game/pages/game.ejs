@@ -2,13 +2,6 @@
 <html lang="en">
   <% include ../partials/head %>
   <body>
-    <div id="time-indicator"></div>
-    <style>
-      #time-indicator {
-        position: fixed;
-        top: 0;
-      }
-    </style>
     <script>
       const gameId = "<%= game.id %>";
       window.results = {
@@ -85,16 +78,6 @@
           ? "html-button-response"
           : "html-keyboard-response",
         stimulus: () => {
-          // switch (sequence.stimulus.stimulusType) {
-          //   case StimulusType.TEXT:
-          //     return textStimulusHtml(sequence.stimulus);
-          //   case StimulusType.IMAGE:
-          //     return imgStimulusHtml(sequence.stimulus);
-          //   default:
-          //     throw new Error(
-          //       `Asset ${sequence.stimulus.stimulusType} is Unsupported Yet.`
-          //     );
-          // }
           return stimulusHtml(sequence.stimulus);
         },
         stimulus_duration: sequence.stimulusDuration,
@@ -148,7 +131,6 @@
                 ],
                 conditional_function: () => {
                   const data = jsPsych.data.get().last(1).values()[0];
-                  console.log(data.button_pressed == data.correct_answer);
                   return data.button_pressed == data.correct_answer;
                 },
               },
@@ -164,7 +146,6 @@
                 ],
                 conditional_function: () => {
                   const data = jsPsych.data.get().last(1).values()[0];
-                  console.log(data.button_pressed == data.correct_answer);
                   return data.button_pressed != data.correct_answer;
                 },
               },
@@ -186,7 +167,6 @@
             ...gameData.sequences.main_sequence,
             ...gameData.sequences.post_sequence,
           ];
-          console.log(entireSequence);
 
           // For
           for (let sequence of entireSequence) {
@@ -202,16 +182,27 @@
             }
           }
 
-          let timer = 0;
-          setInterval(() => {
-            timer += 0.01;
-            document.getElementById("time-indicator");
-          }, 10);
+          timeline.push({
+            type: "html-keyboard-response",
+            stimulus: "<p>실험이 완료되었습니다</p>",
+          });
+
           jsPsych.init({
             timeline,
+            on_finish() {
+              const resultJson = JSON.stringify(store);
+              console.log(resultJson);
+              $.ajax({
+                url: "/api/game/<%= game.id %>",
+                type: "POST",
+                data: { resultJson },
+                dataType: "json",
+              });
+            },
           });
         } catch (error) {
-          console.log(error.stack);
+          alert("에러가 발생했습니다. 콘솔을 확인해주세요.");
+          console.error(error.stack);
         }
       })();
     </script>

@@ -53,4 +53,5 @@ model Result {
   Experiment   Experiment? @relation(fields: [experimentId], references: [id])
   Project      Project?    @relation(fields: [projectId], references: [id])
   User         User?       @relation(fields: [userEmail], references: [email])
+  json         String?     @default("{}")
 }

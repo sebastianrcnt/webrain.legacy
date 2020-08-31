@@ -102,7 +102,22 @@ ApiRouter.get("/game/:id", (req, res) => {
         };
       }
     })
-    .catch(respondWithError);
+    .catch(respondWithError(res));
+});
+
+ApiRouter.post("/game/:id", (req, res) => {
+  const { id } = req.params;
+  const { resultJson } = req.body;
+  if (id && resultJson) {
+    prisma.result
+      .update({ where: { id }, data: { json: resultJson } })
+      .then((result) => {
+        res.status(200).send();
+      })
+      .catch(respondWithError(res));
+  } else {
+    res.status(400).send();
+  }
 });
 
 module.exports = ApiRouter;
