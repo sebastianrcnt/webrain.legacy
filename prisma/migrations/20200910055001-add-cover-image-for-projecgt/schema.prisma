@@ -4,7 +4,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url = "***"
 }
 
 model Experiment {
@@ -19,7 +19,6 @@ model Experiment {
   Result      Result[]
   Project     Project[]
   tags        String?
-  coverFileId String?
 }
 
 model User {

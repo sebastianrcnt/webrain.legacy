@@ -6,7 +6,7 @@
     <div class="px-3 pb-6">
       <div class="container">
         <h1 class="title">프로젝트 수정</h1>
-        <form action="/admin/projects/<%= project.id %>" method="POST">
+        <form action="/admin/projects/<%= project.id %>" method="POST" enctype="multipart/form-data"> 
           <div class="columns">
             <label for="name" class="column">
               프로젝트 ID
@@ -50,6 +50,20 @@
               <textarea name="description" class="textarea">
 <%= project.description %></textarea
               >
+            </label>
+          </div>
+          <div>커버 이미지 업로드</div>
+          <img src="/uploads/<%= project.coverFileId %>" alt="이미지가 업로드되지 않았습니다">
+          <div class="file has-name">
+            <label class="file-label">
+              <input class="file-input" type="file" name="cover" accept=".png,.jpg,.jpeg,.svg" />
+              <span class="file-cta">
+                <span class="file-icon">
+                  <i class="fas fa-upload"></i>
+                </span>
+                <span class="file-label"> 이미지 고르기 </span>
+              </span>
+              <span class="file-name"> </span>
             </label>
           </div>
           <div class="columns">

@@ -12,7 +12,7 @@ const fs = require("fs")
 const rimraf = require("rimraf")
 const path = require("path")
 
-const upload = multer({
+const experimentZipUploader = multer({
   storage: multer.diskStorage({
     destination: function (req, file, cb) {
       req.fileId = shortid.generate()
@@ -24,6 +24,9 @@ const upload = multer({
     },
   }),
 })
+
+const generalUploader = multer({ dest: "uploads/" })
+
 const respondWithError = require("../../middlewares/error")
 const { PrismaClient } = require("@prisma/client")
 const ProjectControllers = require("../../controllers/projects")
@@ -82,12 +85,14 @@ AdminRouter.get(
   )
   .post(
     "/experiments",
-    upload.single("experiment-file"),
+    experimentZipUploader.single("experiment-file"),
     ExperimentControllers.createExperiment
   )
-  .post("/experiments/:id", (req, res) => {
+  .post("/experiments/:id", generalUploader.single("cover"), (req, res) => {
+    const { name, description, tags } = req.body
+    const coverFileId = req.file ? req.file.filename : null
     prisma.experiment
-      .update({ where: { id: req.params.id }, data: req.body })
+      .update({ where: { id: req.params.id }, data: {name, description, tags, coverFileId} })
       .then((experiment) => {
         res.render("utils/message-with-link", {
           message: "실험이 성공적으로 저장되었습니다",
@@ -135,14 +140,16 @@ AdminRouter.get(
   .post("/projects", ProjectControllers.createProject)
   .post(
     "/projects/:id",
+    generalUploader.single("cover"),
     ContextProviders.provideProjectContextById(),
     (req, res) => {
+      const coverFileId = req.file ? req.file.filename : null
       console.log(req.body)
       const { name, description, agreement, public } = req.body
       prisma.project
         .update({
           where: { id: req.params.id },
-          data: { name, description, agreement, public: +public },
+          data: { name, description, agreement, public: +public, coverFileId },
         })
         .then((project) => {
           res.render("utils/message-with-link", {
