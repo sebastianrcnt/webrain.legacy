@@ -66,7 +66,7 @@ const createExperiment = async (req, res) => {
           fileId: req.fileId,
           fileName: req.file.originalname,
           json: req.parseResultJson,
-          tags: tags.trim()
+          tags: req.body.tags.trim()
         },
       })
       .then((experiment) => {
