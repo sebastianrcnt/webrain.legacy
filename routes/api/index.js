@@ -7,11 +7,6 @@ const respondWithError = require("../../middlewares/error")
 const fs = require("fs")
 const path = require("path")
 
-// ApiRouter.use('/api/:name', (req, res) => {
-//   const name = req.params.name;
-//   res.render(`admin/${name}`)
-// });
-
 ApiRouter.get("/login", async (req, res) => {
   const { email, password } = req.query
 
