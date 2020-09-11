@@ -6,7 +6,7 @@ You can check out the [state of the schema](./schema.prisma) after the migration
 ## Database Steps
 
 ```sql
-ALTER TABLE "public"."Project" ADD COLUMN "coverFileId" text   
+ALTER TABLE "public"."Project" ADD COLUMN "coverFileId" text
 ```
 
 ## Changes
@@ -35,5 +35,3 @@ migration 20200910042707-add-tags-to-experiment..20200910055001-add-cover-image-
  model Result {
    experimentId String?
 ```
-
-

@@ -9,14 +9,15 @@ jsPsych offers the ability to call arbitrary functions in response to certain ev
 The `on_close` callback can be declared in the `jsPsych.init` method. The callback triggers when the user leaves the page, but before any content on the page is removed from the browser's memory. This can be used, for example, to save data as the user is leaving the page.
 
 #### Sample use
+
 ```javascript
 jsPsych.init({
   timeline: exp,
-  on_close: function(){
-    var data = jsPsych.data.get().json();
-    save_data_to_server(data);
-  }
-});
+  on_close: function () {
+    var data = jsPsych.data.get().json()
+    save_data_to_server(data)
+  },
+})
 ```
 
 ---
@@ -26,34 +27,41 @@ jsPsych.init({
 The `on_data_update` callback can be declared in the `jsPsych.init` method. The callback triggers at the end of a data update cycle. This happens after every trial, after the on_finish (trial) and on_trial_finish events execute, allowing you to modify the data in those callbacks, and then use this callback to store the data. The function will be passed a single argument, which contains the data that was written.
 
 #### Sample use
+
 ```javascript
 jsPsych.init({
   timeline: exp,
-  on_data_update: function(data) {
-    console.log('Just added new data. The contents of the data are: '+JSON.stringify(data));
-  }
-});
+  on_data_update: function (data) {
+    console.log(
+      "Just added new data. The contents of the data are: " +
+        JSON.stringify(data)
+    )
+  },
+})
 ```
+
 ---
 
 ## on_finish (trial)
 
-The `on_finish` callback can be added to any trial. The callback will trigger whenever the trial ends. The callback function will be passed a single argument, containing the data object from the trial. This data object is *editable*. Any changes made in the on_finish function will be stored in the internal data collection.
+The `on_finish` callback can be added to any trial. The callback will trigger whenever the trial ends. The callback function will be passed a single argument, containing the data object from the trial. This data object is _editable_. Any changes made in the on_finish function will be stored in the internal data collection.
 
 #### Sample use
+
 ```javascript
 var trial = {
-  type: 'image-keyboard-response',
-  stimulus: 'imgA.png',
-  on_finish: function(data) {
-    if(data.key_press == 85){
-      data.correct = true;
+  type: "image-keyboard-response",
+  stimulus: "imgA.png",
+  on_finish: function (data) {
+    if (data.key_press == 85) {
+      data.correct = true
     } else {
-      data.correct = false;
+      data.correct = false
     }
-  }
-};
+  },
+}
 ```
+
 ---
 
 ## on_finish (experiment)
@@ -61,14 +69,18 @@ var trial = {
 The `on_finish` callback can be declared in the `jsPsych.init` method. The callback will trigger once all trials in the experiment have been run. The method will be passed a single argument, containing all of the data generated in the experiment.
 
 #### Sample use
+
 ```javascript
 jsPsych.init({
   timeline: exp,
-  on_finish: function(data) {
-    console.log('The experiment is over! Here is all the data: '+JSON.stringify(data));
-  }
-});
+  on_finish: function (data) {
+    console.log(
+      "The experiment is over! Here is all the data: " + JSON.stringify(data)
+    )
+  },
+})
 ```
+
 ---
 
 ## on_load
@@ -76,15 +88,17 @@ jsPsych.init({
 The `on_load` callback can be added to any trial. The callback will trigger once the trial has completed loading. For most plugins, this will occur once the display has been initially updated but before any user interactions or timed events (e.g., animations) have occurred.
 
 #### Sample use
+
 ```javascript
 var trial = {
-  type: 'image-keyboard-response',
-  stimulus: 'imgA.png',
-  on_load: function() {
-    console.log('The trial just finished loading.');
-  }
-};
+  type: "image-keyboard-response",
+  stimulus: "imgA.png",
+  on_load: function () {
+    console.log("The trial just finished loading.")
+  },
+}
 ```
+
 ---
 
 ## on_start (trial)
@@ -92,15 +106,16 @@ var trial = {
 The `on_start` callback can be added to any trial. The callback will trigger right before the trial begins. The callback function will be passed a single argument, containing the trial object. If any of the parameters of the trial are functions or timeline variables, these will be evaluated before `on_start` is called, and the trial object will contain the evaluated value. The trial object is modifiable, and any changes made will affect the trial.
 
 #### Sample use
+
 ```javascript
 var trial = {
-  type: 'image-keyboard-response',
-  stimulus: 'imgA.png',
-  on_start: function(trial) {
-    console.log('The trial is about to start.');
-    trial.stimulus = 'imgB.png'; // this will change what stimulus is displayed in the trial
-  }
-};
+  type: "image-keyboard-response",
+  stimulus: "imgA.png",
+  on_start: function (trial) {
+    console.log("The trial is about to start.")
+    trial.stimulus = "imgB.png" // this will change what stimulus is displayed in the trial
+  },
+}
 ```
 
 ---
@@ -110,15 +125,17 @@ var trial = {
 The `on_trial_finish` callback can be declared in the `jsPsych.init` method. The callback will trigger at the end of every trial in the experiment. If you want a callback to trigger only for the end of certain trials, use the [`on_finish`](#onfinishtrial) callback on the trial object. The callback function will be passed a single argument, containing the data object from the trial.
 
 #### Sample use
+
 ```javascript
 jsPsych.init({
   timeline: exp,
-  on_trial_finish: function(data) {
-    console.log('A trial just ended.');
-    console.log(JSON.stringify(data));
-  }
-});
+  on_trial_finish: function (data) {
+    console.log("A trial just ended.")
+    console.log(JSON.stringify(data))
+  },
+})
 ```
+
 ---
 
 ## on_trial_start
@@ -128,13 +145,13 @@ The `on_trial_start` callback can be declared in the `jsPsych.init` method. The 
 #### Sample use
 
 ```javascript
-var current_score = 0; // a variable that is updated throughout the experiment to keep track of the current score.
+var current_score = 0 // a variable that is updated throughout the experiment to keep track of the current score.
 
 jsPsych.init({
   timeline: exp,
-  on_trial_start: function(trial) {
-    trial.data.score_at_start_of_trial = current_score;
-    console.log('A trial just started.');
-  }
-});
+  on_trial_start: function (trial) {
+    trial.data.score_at_start_of_trial = current_score
+    console.log("A trial just started.")
+  },
+})
 ```

@@ -16,8 +16,8 @@ You can specify a custom function, in the jsPsych.init() method, that is called 
 
 ```javascript
 jsPsych.init({
-  on_interaction_data_update: function(data) {
+  on_interaction_data_update: function (data) {
     console.log(JSON.stringify(data))
-  }
-});
+  },
+})
 ```

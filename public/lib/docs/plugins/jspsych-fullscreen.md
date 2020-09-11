@@ -6,52 +6,52 @@ Safari does not support keyboard input when the browser is in fullscreen mode. T
 
 ## Parameters
 
-Parameters with a default value of *undefined* must be specified. Other parameters can be left unspecified if the default value is acceptable.
+Parameters with a default value of _undefined_ must be specified. Other parameters can be left unspecified if the default value is acceptable.
 
-Parameter | Type | Default Value | Description
-----------|------|---------------|------------
-fullscreen_mode | boolean | `true` | A value of `true` causes the experiment to enter fullscreen mode. A value of `false` causes the browser to exit fullscreen mode.
-message | string | `<p>The experiment will switch to full screen mode when you press the button below</p>` | The HTML content to display above the button to enter fullscreen mode.
-button_label | string |  'Continue' | The text that appears on the button to enter fullscreen mode.
-delay_after | numeric | 1000 | The length of time to delay after entering fullscreen mode before ending the trial. This can be useful because entering fullscreen is jarring and most browsers display some kind of message that the browser has entered fullscreen mode.
+| Parameter       | Type    | Default Value                                                                           | Description                                                                                                                                                                                                                                |
+| --------------- | ------- | --------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| fullscreen_mode | boolean | `true`                                                                                  | A value of `true` causes the experiment to enter fullscreen mode. A value of `false` causes the browser to exit fullscreen mode.                                                                                                           |
+| message         | string  | `<p>The experiment will switch to full screen mode when you press the button below</p>` | The HTML content to display above the button to enter fullscreen mode.                                                                                                                                                                     |
+| button_label    | string  | 'Continue'                                                                              | The text that appears on the button to enter fullscreen mode.                                                                                                                                                                              |
+| delay_after     | numeric | 1000                                                                                    | The length of time to delay after entering fullscreen mode before ending the trial. This can be useful because entering fullscreen is jarring and most browsers display some kind of message that the browser has entered fullscreen mode. |
 
 ## Data Generated
 
 In addition to the [default data collected by all plugins](overview#datacollectedbyplugins), this plugin collects the following data for each trial.
 
-Name | Type | Value
------|------|------
-success | boolean | true if the browser supports fullscreen mode (i.e., is not Safari)
+| Name    | Type    | Value                                                              |
+| ------- | ------- | ------------------------------------------------------------------ |
+| success | boolean | true if the browser supports fullscreen mode (i.e., is not Safari) |
 
 ## Examples
 
 #### Entering and exiting fullscreen
 
 ```javascript
-var timeline = [];
+var timeline = []
 
 timeline.push({
-  type: 'fullscreen',
-  fullscreen_mode: true
-});
+  type: "fullscreen",
+  fullscreen_mode: true,
+})
 
 timeline.push({
-  type: 'html-keyboard-response',
-  stimulus: 'This trial will be in fullscreen mode.'
-});
+  type: "html-keyboard-response",
+  stimulus: "This trial will be in fullscreen mode.",
+})
 
 // exit fullscreen mode
 timeline.push({
-  type: 'fullscreen',
-  fullscreen_mode: false
-});
+  type: "fullscreen",
+  fullscreen_mode: false,
+})
 
 timeline.push({
-  type: 'html-keyboard-response',
-  stimulus: 'This trial will NOT be in fullscreen mode.'
-});
+  type: "html-keyboard-response",
+  stimulus: "This trial will NOT be in fullscreen mode.",
+})
 
 jsPsych.init({
-  timeline: timeline
-});
+  timeline: timeline,
+})
 ```

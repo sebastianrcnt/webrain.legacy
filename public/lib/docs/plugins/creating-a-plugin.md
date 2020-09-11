@@ -32,7 +32,7 @@ Let's examine it in more detail.
 
 The overall structure of the plugin is defined using a module JavaScript design pattern. This pattern uses a technique called an anonymous closure. This is why the first line has `(function(){` and the last line is `})();`. The details aren't important, but if you want to learn more about it, [this is a nice overview](http://www.adequatelygood.com/JavaScript-Module-Pattern-In-Depth.html). The reason this pattern is useful is because it allows for persistent state and private scope. In other words, the plugin is isolated and can't be altered by other plugins.
 
-The module, created by the `(function(){`  `})();` expressions, contains an object called `plugin` that has two properties, `info` and `trial`. The `plugin` object is returned at the end of the module, which is what assigns the defined properties of `plugin` to `jsPsych['plugin-name']`.
+The module, created by the `(function(){` `})();` expressions, contains an object called `plugin` that has two properties, `info` and `trial`. The `plugin` object is returned at the end of the module, which is what assigns the defined properties of `plugin` to `jsPsych['plugin-name']`.
 
 ### plugin.trial
 
@@ -47,16 +47,17 @@ Of course, there are other things that you will probably want the plugin to do b
 There are a few ways to change the content of the display. The `display_element` parameter of the trial method contains the DOM element for displaying content, so you can use various JavaScript methods for interaction with the display element. A common one is to change the `innerHTML`.
 
 ```javascript
-var html_content = '<p>This is the first paragraph</p>';
-html_content += '<p>This is the second paragraph</p>';
+var html_content = "<p>This is the first paragraph</p>"
+html_content += "<p>This is the second paragraph</p>"
 
-display_element.innerHTML = html_content;
+display_element.innerHTML = html_content
 ```
+
 It is often appropriate to use `innerHTML` to clear the display at the end of a trial:
 
 ```javascript
 // clear the display
-display_element.innerHTML = '';
+display_element.innerHTML = ""
 ```
 
 #### Write data
@@ -66,7 +67,7 @@ Plugins exist to collect data, so saving data is obviously a crucial thing to do
 ```javascript
 var data = {
   correct: true,
-  rt: 350
+  rt: 350,
 }
 
 jsPsych.finishTrial(data)

@@ -92,7 +92,10 @@ AdminRouter.get(
     const { name, description, tags } = req.body
     const coverFileId = req.file ? req.file.filename : null
     prisma.experiment
-      .update({ where: { id: req.params.id }, data: {name, description, tags, coverFileId} })
+      .update({
+        where: { id: req.params.id },
+        data: { name, description, tags, coverFileId },
+      })
       .then((experiment) => {
         res.render("utils/message-with-link", {
           message: "실험이 성공적으로 저장되었습니다",

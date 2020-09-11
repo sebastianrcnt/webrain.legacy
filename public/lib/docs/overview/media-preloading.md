@@ -10,25 +10,25 @@ jsPsych will automatically preload audio, video, and image files that are used a
 // the image file img/file1.png is
 // automatically preloaded before the experiment begins
 var trial = {
-	type: 'image-keyboard-response',
-	stimulus: 'img/file1.png'
+  type: "image-keyboard-response",
+  stimulus: "img/file1.png",
 }
 
 // the sound file is also preloaded automatically
 var sound_trial = {
-	type: 'audio-keyboard-response',
-	stimulus: 'audio/hello.mp3'
+  type: "audio-keyboard-response",
+  stimulus: "audio/hello.mp3",
 }
 
 // the video file is preloaded automatically
 var video_trial = {
-	type: 'video',
-	sources: ['video/sample_video.mp4']
+  type: "video",
+  sources: ["video/sample_video.mp4"],
 }
 
 jsPsych.init({
-	timeline: [trial]
-});
+  timeline: [trial],
+})
 ```
 
 ## Manual preloading
@@ -41,40 +41,38 @@ You can specify an array of image files (`preload_images`) and an array of audio
 // this trial will not preload the images, because the image file is being used
 // in an HTML string
 var trial = {
-	type: 'html-keyboard-response',
-	stimulus: '<img src="img/file1.png"></img>',
+  type: "html-keyboard-response",
+  stimulus: '<img src="img/file1.png"></img>',
 }
 
 var audio_trial = {
-	type: 'audio-keyboard-response',
-	stimulus: function() { return 'audio/foo.mp3' }
+  type: "audio-keyboard-response",
+  stimulus: function () {
+    return "audio/foo.mp3"
+  },
 }
 
 var video_timline = {
-	timeline: [
-		{
-			type: 'video',
-			sources: jsPsych.timelineVariable('video')
-		}
-	],
-	timeline_variables: [
-		{video: ['video/1.mp4']},
-		{video: ['video/2.mp4']}
-	]
+  timeline: [
+    {
+      type: "video",
+      sources: jsPsych.timelineVariable("video"),
+    },
+  ],
+  timeline_variables: [{ video: ["video/1.mp4"] }, { video: ["video/2.mp4"] }],
 }
 
 // an array of paths to images that need to be loaded
-var images = ['img/file1.png'];
-var audio = ['audio/foo.mp3'];
-var video = ['video/1.mp4', 'video/2.mp4'];
+var images = ["img/file1.png"]
+var audio = ["audio/foo.mp3"]
+var video = ["video/1.mp4", "video/2.mp4"]
 
 jsPsych.init({
-	timeline: [trial],
-	preload_audio: audio,
-	preload_images: images,
-	preload_video: video
-});
-
+  timeline: [trial],
+  preload_audio: audio,
+  preload_images: images,
+  preload_video: video,
+})
 ```
 
 ## Preloading progress bar
@@ -83,7 +81,7 @@ By default, jsPsych will display a small progress bar while files are being prel
 
 ```javascript
 jsPsych.init({
-	timeline: timeline,
-	show_preload_progress_bar: false // hide preload progress bar
-});
+  timeline: timeline,
+  show_preload_progress_bar: false, // hide preload progress bar
+})
 ```

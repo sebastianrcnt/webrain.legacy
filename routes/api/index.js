@@ -1,11 +1,11 @@
-const express = require("express");
-const ApiRouter = express.Router();
-const { PrismaClient } = require("@prisma/client");
-const prisma = new PrismaClient();
-const jwt = require("jsonwebtoken");
-const respondWithError = require("../../middlewares/error");
-const fs = require('fs')
-const path = require('path')
+const express = require("express")
+const ApiRouter = express.Router()
+const { PrismaClient } = require("@prisma/client")
+const prisma = new PrismaClient()
+const jwt = require("jsonwebtoken")
+const respondWithError = require("../../middlewares/error")
+const fs = require("fs")
+const path = require("path")
 
 // ApiRouter.use('/api/:name', (req, res) => {
 //   const name = req.params.name;
@@ -13,7 +13,7 @@ const path = require('path')
 // });
 
 ApiRouter.get("/login", async (req, res) => {
-  const { email, password } = req.query;
+  const { email, password } = req.query
 
   if (email && password) {
     prisma.user.findOne({ where: { email } }).then((found) => {
@@ -25,24 +25,24 @@ ApiRouter.get("/login", async (req, res) => {
             },
             "secret",
             { expiresIn: "1d" }
-          );
+          )
 
-          req.cookie("webrain-token", token);
-          res.status(200).json(token);
+          req.cookie("webrain-token", token)
+          res.status(200).json(token)
         } else {
-          res.status(401).send("wrong password");
+          res.status(401).send("wrong password")
         }
       } else {
-        res.status(404).send("No user find with the email");
+        res.status(404).send("No user find with the email")
       }
-    });
+    })
   } else {
-    res.status(400).send("Email and Password is not provided");
+    res.status(400).send("Email and Password is not provided")
   }
-});
+})
 
 ApiRouter.get("/process/connect-experiment-to-project", (req, res) => {
-  const { projectId, experimentId } = req.query;
+  const { projectId, experimentId } = req.query
   if (projectId && experimentId) {
     prisma.project
       .update({
@@ -54,16 +54,16 @@ ApiRouter.get("/process/connect-experiment-to-project", (req, res) => {
         },
       })
       .then((success) => {
-        res.status(200).send("success");
+        res.status(200).send("success")
       })
-      .catch(respondWithError(res));
+      .catch(respondWithError(res))
   } else {
-    res.status(400).send();
+    res.status(400).send()
   }
-});
+})
 
 ApiRouter.get("/process/disconnect-experiment-to-project", (req, res) => {
-  const { projectId, experimentId } = req.query;
+  const { projectId, experimentId } = req.query
   if (projectId && experimentId) {
     prisma.project
       .update({
@@ -75,16 +75,16 @@ ApiRouter.get("/process/disconnect-experiment-to-project", (req, res) => {
         },
       })
       .then((success) => {
-        res.status(200).send("success");
+        res.status(200).send("success")
       })
-      .catch(respondWithError(res));
+      .catch(respondWithError(res))
   } else {
-    res.status(400).send();
+    res.status(400).send()
   }
-});
+})
 
 ApiRouter.get("/game/:id", (req, res) => {
-  const { id } = req.params;
+  const { id } = req.params
   prisma.result
     .findOne({
       where: { id },
@@ -96,43 +96,48 @@ ApiRouter.get("/game/:id", (req, res) => {
     })
     .then((result) => {
       if (result) {
-        res.json(JSON.parse(result.Experiment.json));
+        res.json(JSON.parse(result.Experiment.json))
       } else {
         throw {
           intended: true,
           message: "게임을 찾을 수 없습니다",
-        };
+        }
       }
     })
-    .catch(respondWithError(res));
-});
+    .catch(respondWithError(res))
+})
 
 ApiRouter.post("/game/:id", (req, res) => {
-  const { id } = req.params;
-  const { resultJson } = req.body;
+  const { id } = req.params
+  const { resultJson } = req.body
   if (id && resultJson) {
     prisma.result
       .update({ where: { id }, data: { json: resultJson } })
       .then((result) => {
-        res.status(200).send();
+        res.status(200).send()
       })
-      .catch(respondWithError(res));
+      .catch(respondWithError(res))
   } else {
-    res.status(400).send();
+    res.status(400).send()
   }
-});
+})
 
 ApiRouter.get("/download/game/:id", (req, res) => {
-  const {id} = req.params;
+  const { id } = req.params
   prisma.result
     .findOne({
       where: { id },
-    }).then(result => {
-      fs.writeFileSync(`json/result.json`, JSON.stringify(JSON.parse(result.json), null, 4))
-      res.download(path.resolve('json/result.json'))
-    }).catch((err) => {
+    })
+    .then((result) => {
+      fs.writeFileSync(
+        `json/result.json`,
+        JSON.stringify(JSON.parse(result.json), null, 4)
+      )
+      res.download(path.resolve("json/result.json"))
+    })
+    .catch((err) => {
       console.error(err)
       res.sendStatus(404)
     })
 })
-module.exports = ApiRouter;
+module.exports = ApiRouter

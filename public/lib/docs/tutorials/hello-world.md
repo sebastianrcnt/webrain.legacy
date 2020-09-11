@@ -6,7 +6,7 @@ In the long tradition of **"Hello world!"** examples, this tutorial creates an e
 
 Start by downloading the jsPsych library. The most recent version can always be found on the [GitHub releases page](https://github.com/jodeleeuw/jsPsych/releases).
 
-*Note: the image below shows version 4.2, but the process is the same for the most recent version.*
+_Note: the image below shows version 4.2, but the process is the same for the most recent version._
 
 ![releasespage](/img/githubreleases.jpg)
 
@@ -20,8 +20,8 @@ Create a folder on your computer to put the experiment files in. Once you've cre
 
 To edit jsPsych code you'll need a programming-friendly text editor. Some free options are:
 
-* [Atom](https://atom.io) (Windows, OSX, Linux)
-* [VSCode](https://code.visualstudio.com/) (Windows, OSX, Linux)
+- [Atom](https://atom.io) (Windows, OSX, Linux)
+- [VSCode](https://code.visualstudio.com/) (Windows, OSX, Linux)
 
 Once you've got a text editor that you like, create a new file in the experiment folder called `experiment.html`
 
@@ -34,10 +34,10 @@ There's some basic code that (nearly) all HTML documents have in common. Here's 
 ```html
 <!DOCTYPE html>
 <html>
-	<head>
-		<title>My experiment</title>
-	</head>
-	<body></body>
+  <head>
+    <title>My experiment</title>
+  </head>
+  <body></body>
 </html>
 ```
 
@@ -50,11 +50,11 @@ To use jsPsych, add a `<script>` tag to import the library.
 ```html
 <!DOCTYPE html>
 <html>
-	<head>
-		<title>My experiment</title>
-		<script src="jspsych-6.0.5/jspsych.js"></script>
-	</head>
-	<body></body>
+  <head>
+    <title>My experiment</title>
+    <script src="jspsych-6.0.5/jspsych.js"></script>
+  </head>
+  <body></body>
 </html>
 ```
 

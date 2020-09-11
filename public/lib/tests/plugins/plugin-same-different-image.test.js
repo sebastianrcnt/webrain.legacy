@@ -1,17 +1,17 @@
-const root = '../../';
-const utils = require('../testing-utils.js');
+const root = "../../"
+const utils = require("../testing-utils.js")
 
-jest.useFakeTimers();
+jest.useFakeTimers()
 
-describe('same-different-image plugin', function(){
+describe("same-different-image plugin", function () {
+  beforeEach(function () {
+    require(root + "jspsych.js")
+    require(root + "plugins/jspsych-same-different-image.js")
+  })
 
-	beforeEach(function(){
-		require(root + 'jspsych.js');
-		require(root + 'plugins/jspsych-same-different-image.js');
-	});
-
-	test('loads correctly', function(){
-		expect(typeof window.jsPsych.plugins['same-different-image']).not.toBe('undefined');
-	});
-
-});
+  test("loads correctly", function () {
+    expect(typeof window.jsPsych.plugins["same-different-image"]).not.toBe(
+      "undefined"
+    )
+  })
+})

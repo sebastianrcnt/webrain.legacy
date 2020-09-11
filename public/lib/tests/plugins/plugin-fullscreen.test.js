@@ -1,18 +1,17 @@
-const root = '../../';
+const root = "../../"
 
-jest.useFakeTimers();
+jest.useFakeTimers()
 
-describe('fullscreen plugin', function(){
-
-  beforeEach(function(){
-    require(root + 'jspsych.js');
-    require(root + 'plugins/jspsych-fullscreen.js');
+describe("fullscreen plugin", function () {
+  beforeEach(function () {
+    require(root + "jspsych.js")
+    require(root + "plugins/jspsych-fullscreen.js")
     // require(root + 'plugins/jspsych-text.js');
-  });
+  })
 
-  test('loads correctly', function(){
-    expect(typeof window.jsPsych.plugins['fullscreen']).not.toBe('undefined');
-  });
+  test("loads correctly", function () {
+    expect(typeof window.jsPsych.plugins["fullscreen"]).not.toBe("undefined")
+  })
 
   // can't test this right now because jsdom doesn't support fullscreen API.
 
@@ -37,5 +36,4 @@ describe('fullscreen plugin', function(){
 
     expect(document.fullscreenElement).not.toBeUndefined();
   });*/
-
-});
+})

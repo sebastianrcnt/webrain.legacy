@@ -6,12 +6,12 @@
 // const result = parser.execute().json();
 // console.log(result);
 
-const decompress = require("decompress");
-const { resolve } = require("path");
+const decompress = require("decompress")
+const { resolve } = require("path")
 decompress(
   // resolve("uploads/jicraYVe-/holy_shit2.zip"),
   "/Users/sebastianrcnt/Desktop/data/Archive.zip",
   "uploads/extracted/"
 ).then((files) => {
-  console.log(files);
-});
+  console.log(files)
+})

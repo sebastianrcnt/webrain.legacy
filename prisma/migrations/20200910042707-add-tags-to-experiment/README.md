@@ -6,7 +6,7 @@ You can check out the [state of the schema](./schema.prisma) after the migration
 ## Database Steps
 
 ```sql
-ALTER TABLE "public"."Experiment" ADD COLUMN "tags" text   
+ALTER TABLE "public"."Experiment" ADD COLUMN "tags" text
 ```
 
 ## Changes
@@ -35,5 +35,3 @@ migration 20200901042124-psql1..20200910042707-add-tags-to-experiment
  model User {
    email      String       @default("unset@monet.com") @id
 ```
-
-

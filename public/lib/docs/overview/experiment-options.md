@@ -14,20 +14,20 @@ jsPsych.init({
 
 ## Controlling where jsPsych renders on the page
 
-By default, jsPsych will render the experiment in the `<body>` element of a page. It is possible to display the experiment in a different element (e.g., a `<div>`) by specifying the `display_element` parameter. 
+By default, jsPsych will render the experiment in the `<body>` element of a page. It is possible to display the experiment in a different element (e.g., a `<div>`) by specifying the `display_element` parameter.
 
 ```html
 <body>
-    <div id="jspsych-target"></div>
+  <div id="jspsych-target"></div>
 </body>
 <script>
-    
-    // ... //
 
-    jsPsych.init({
-        timeline: [...],
-        display_element: 'jspsych-target'
-    })
+  // ... //
+
+  jsPsych.init({
+      timeline: [...],
+      display_element: 'jspsych-target'
+  })
 </script>
 ```
 
@@ -37,12 +37,12 @@ This option is useful if the experiment needs to be rendered on a page with othe
 
 Several experiment-wide events can trigger functions. This is documented in more detail on the [event-related callback functions page](callbacks.md). The events that trigger functions are:
 
-* `on_finish`: Called at the end of the experiment.
-* `on_trial_start`: Called at the beginning of every trial.
-* `on_trial_finish`: Called at the end of every trial.
-* `on_data_update`: Called whenever new data is added to the jsPsych data object.
-* `on_interaction_data_update`: Called whenever new interaction data (e.g., the subject enters or exits fullscreen mode) is added.
-* `on_close`: Called right before the page closes, such as when a subject closes the experiment early.
+- `on_finish`: Called at the end of the experiment.
+- `on_trial_start`: Called at the beginning of every trial.
+- `on_trial_finish`: Called at the end of every trial.
+- `on_data_update`: Called whenever new data is added to the jsPsych data object.
+- `on_interaction_data_update`: Called whenever new interaction data (e.g., the subject enters or exits fullscreen mode) is added.
+- `on_close`: Called right before the page closes, such as when a subject closes the experiment early.
 
 ## Specify exclusion criteria
 
@@ -58,7 +58,7 @@ Images, audio files, and movies can be preloaded to reduce latency during the ex
 
 ## Choose the method for playing audio files
 
-By default, jsPsych uses the WebAudio API to play audio files. Among other features, the WebAudio API allows for more precise measurement of response times relative to the onset of the audio. 
+By default, jsPsych uses the WebAudio API to play audio files. Among other features, the WebAudio API allows for more precise measurement of response times relative to the onset of the audio.
 
 However, loading files through the WebAudio API may not work when running an experiment locally (i.e., not on a live web server). This is due to the [cross-origin security policy](https://security.stackexchange.com/a/190321) implemented by web browsers. One option is to [temporarily disable the security](https://stackoverflow.com/q/4819060/3726673) for testing purposes. Another is to use HTML5 Audio instead of the WebAudio API. This can be done by specifying the `use_webaudio` parameter in `jsPsych.init()`.
 
@@ -94,4 +94,3 @@ jsPsych.init({
     experiment_width: 750
 });
 ```
-

@@ -1,29 +1,29 @@
-type YesOrNo = "y" | "n";
+type YesOrNo = "y" | "n"
 
 interface Stimulus {
-  stimulusType?: StimulusType;
-  identifier?: string;
-  content?: string;
-  button?: boolean;
-  filePath?: string | null;
-  fontSize?: number | null;
-  fontColor?: string | null;
+  stimulusType?: StimulusType
+  identifier?: string
+  content?: string
+  button?: boolean
+  filePath?: string | null
+  fontSize?: number | null
+  fontColor?: string | null
 }
 
 interface Sequence {
-  onSetTime?: number | null;
-  stimulus: Stimulus;
-  stimulusDuration?: number | null;
-  choices?: Stimulus[] | null;
-  choiceDuration?: number | null;
-  answer?: number | null;
-  choiceOnsetRelativeToSim?: number | null;
-  reactionTime?: number | null;
-  feedbackType?: FeedbackType;
-  feedbackDuration?: number | null;
-  test?: boolean;
-  feedback1?: Stimulus | null;
-  feedback2?: Stimulus | null;
+  onSetTime?: number | null
+  stimulus: Stimulus
+  stimulusDuration?: number | null
+  choices?: Stimulus[] | null
+  choiceDuration?: number | null
+  answer?: number | null
+  choiceOnsetRelativeToSim?: number | null
+  reactionTime?: number | null
+  feedbackType?: FeedbackType
+  feedbackDuration?: number | null
+  test?: boolean
+  feedback1?: Stimulus | null
+  feedback2?: Stimulus | null
 }
 
 enum StimulusType {
@@ -48,202 +48,202 @@ function splitWithEscapedCharacter(
   splitChar: string,
   pairChar: string
 ): string[] {
-  text = text + splitChar;
-  let isPairOpen = false;
-  let resultArray = [];
-  let wordBuffer = [];
+  text = text + splitChar
+  let isPairOpen = false
+  let resultArray = []
+  let wordBuffer = []
 
   for (let char of text) {
     switch (char) {
       case pairChar:
-        isPairOpen = !isPairOpen;
-        break;
+        isPairOpen = !isPairOpen
+        break
 
       case splitChar:
         if (isPairOpen) {
-          wordBuffer.push(char);
+          wordBuffer.push(char)
         } else {
           // add to resultArray and flush wordBuffer
-          const completedWord = wordBuffer.join("");
-          resultArray.push(completedWord);
-          wordBuffer = [];
+          const completedWord = wordBuffer.join("")
+          resultArray.push(completedWord)
+          wordBuffer = []
         }
-        break;
+        break
       default:
-        wordBuffer.push(char);
-        break;
+        wordBuffer.push(char)
+        break
     }
   }
 
-  return resultArray;
+  return resultArray
 }
 
 class Parser {
   // after constructor()
-  rows: string[];
+  rows: string[]
 
   // after splitRowsIntoSection()
-  stimulusRows: string[];
-  preSequenceRows: string[];
-  mainSequenceRows: string[];
-  postSequenceRows: string[];
+  stimulusRows: string[]
+  preSequenceRows: string[]
+  mainSequenceRows: string[]
+  postSequenceRows: string[]
 
   // after parseStimulus()
-  stimulus: any;
+  stimulus: any
 
   // after parseAllSequences()
-  sequences: any;
+  sequences: any
 
   constructor(rawInput: string) {
     this.rows = rawInput
       .split("\n")
       .map((row) => {
-        const idx = row.indexOf("#");
+        const idx = row.indexOf("#")
         if (idx != -1) {
-          return row.slice(0, idx);
+          return row.slice(0, idx)
         } else {
-          return row;
+          return row
         }
       })
       .filter((row) => !!row)
-      .map((row) => row.trim());
+      .map((row) => row.trim())
 
-    this.stimulusRows = [];
-    this.preSequenceRows = [];
-    this.mainSequenceRows = [];
-    this.postSequenceRows = [];
+    this.stimulusRows = []
+    this.preSequenceRows = []
+    this.mainSequenceRows = []
+    this.postSequenceRows = []
 
-    this.stimulus = {};
-    this.sequences = {};
+    this.stimulus = {}
+    this.sequences = {}
   }
 
   execute() {
-    this.splitRowsIntoSection();
-    this.parseStimulusRows();
-    this.parseAllSequences();
-    return this;
+    this.splitRowsIntoSection()
+    this.parseStimulusRows()
+    this.parseAllSequences()
+    return this
   }
 
   detectSectionStartAndEnd(keyword: string) {
-    let sectionStartIndex: number | null = null;
-    let sectionEndIndex: number | null = null;
+    let sectionStartIndex: number | null = null
+    let sectionEndIndex: number | null = null
 
     for (let index = 0; index < this.rows.length; index++) {
-      const instruction: string = this.rows[index];
-      const isSectionStartInstruction: boolean = instruction == `[${keyword}]`;
-      const isSectionEndInstruction: boolean = instruction == `[End${keyword}]`;
+      const instruction: string = this.rows[index]
+      const isSectionStartInstruction: boolean = instruction == `[${keyword}]`
+      const isSectionEndInstruction: boolean = instruction == `[End${keyword}]`
 
       if (isSectionStartInstruction) {
-        sectionStartIndex = index;
+        sectionStartIndex = index
       } else if (isSectionEndInstruction) {
-        sectionEndIndex = index;
-        break;
+        sectionEndIndex = index
+        break
       }
     }
 
-    return { sectionStartIndex, sectionEndIndex };
+    return { sectionStartIndex, sectionEndIndex }
   }
 
   splitSections(keyword: string): string[] {
     const {
       sectionStartIndex,
       sectionEndIndex,
-    } = this.detectSectionStartAndEnd(keyword);
+    } = this.detectSectionStartAndEnd(keyword)
 
     if (sectionStartIndex === null || sectionEndIndex === null) {
-      throw new Error("섹션 파싱에 실패했습니다.");
+      throw new Error("섹션 파싱에 실패했습니다.")
     } else {
-      return this.rows.slice(sectionStartIndex + 1, sectionEndIndex);
+      return this.rows.slice(sectionStartIndex + 1, sectionEndIndex)
     }
   }
 
   getStimulusByIdentifier(stimulusIdentifier: string): Stimulus {
-    const found = this.stimulus[stimulusIdentifier];
+    const found = this.stimulus[stimulusIdentifier]
     if (found) {
-      return found as Stimulus;
+      return found as Stimulus
     } else {
-      throw new Error(`Stimulus Identifier ${stimulusIdentifier} is not valid`);
+      throw new Error(`Stimulus Identifier ${stimulusIdentifier} is not valid`)
     }
   }
 
   splitRowsIntoSection() {
-    this.stimulusRows = this.splitSections("Descriptions");
-    this.preSequenceRows = this.splitSections("PreSeq");
-    this.mainSequenceRows = this.splitSections("MainSeq");
-    this.postSequenceRows = this.splitSections("PostSeq");
+    this.stimulusRows = this.splitSections("Descriptions")
+    this.preSequenceRows = this.splitSections("PreSeq")
+    this.mainSequenceRows = this.splitSections("MainSeq")
+    this.postSequenceRows = this.splitSections("PostSeq")
   }
 
   parseStimulusRow(row: string): Stimulus {
-    let stimulus: Stimulus = {};
+    let stimulus: Stimulus = {}
 
     // 띄어쓰기로 row를 분리하여 토큰 array로 저장(큰따옴표(") 내부에 있는 띄어쓰기는 무시))
     // ex) text1 T1 "you have 2 apples" n n
     // => splittedRow : ["text1", "T1", "you have 2 apples", "n", "n"]
-    const tokens: string[] = splitWithEscapedCharacter(row, " ", '"');
+    const tokens: string[] = splitWithEscapedCharacter(row, " ", '"')
 
     // 첫 토큰 2개 추출
-    const [stimulusType, identifier] = tokens;
-    stimulus.stimulusType = stimulusType as StimulusType;
-    stimulus.identifier = identifier;
+    const [stimulusType, identifier] = tokens
+    stimulus.stimulusType = stimulusType as StimulusType
+    stimulus.identifier = identifier
 
     // 나머지 토큰들은 Stimulus Type에 따라 배치가 다르기 때문에 switch 문으로 분리
-    const left = tokens.slice(2);
+    const left = tokens.slice(2)
 
     switch (stimulusType) {
       case StimulusType.IMAGE:
         var [
           filePath, // ex) 'img/3.png'
           button, // true, false => 어떤 값이든 있으면 true, false
-        ] = left;
-        stimulus = { ...stimulus, filePath, button: !!button };
-        break;
+        ] = left
+        stimulus = { ...stimulus, filePath, button: !!button }
+        break
       case StimulusType.TEXT:
-        var [content, fontSize, fontColor] = left;
+        var [content, fontSize, fontColor] = left
         stimulus = {
           ...stimulus,
           content,
           fontSize: fontSize === "n" ? null : parseInt(fontSize),
           fontColor: fontColor === "n" ? null : fontColor,
-        };
-        break;
+        }
+        break
       case StimulusType.TEXT_FILE:
-        var [filePath, fontSize, fontColor] = left;
+        var [filePath, fontSize, fontColor] = left
         stimulus = {
           ...stimulus,
           filePath,
           fontSize: fontSize === "n" ? null : parseInt(fontSize),
           fontColor: fontColor === "n" ? null : fontColor,
-        };
-        break;
+        }
+        break
       case StimulusType.AUDIO:
       case StimulusType.VIDEO:
-        console.log(left);
-        var [filePath] = left;
-        stimulus = { ...stimulus, filePath };
-        break;
+        console.log(left)
+        var [filePath] = left
+        stimulus = { ...stimulus, filePath }
+        break
       default:
-        throw new Error(`${stimulusType}은 유효한 자극 유형이 아닙니다`);
+        throw new Error(`${stimulusType}은 유효한 자극 유형이 아닙니다`)
     }
 
-    return stimulus;
+    return stimulus
   }
 
   parseStimulusRows() {
     for (let index = 0; index < this.stimulusRows.length; index++) {
-      const stimulusRow: string = this.stimulusRows[index];
+      const stimulusRow: string = this.stimulusRows[index]
       // const stimulus = Stimulus.FromRow(row);
-      const stimulus = this.parseStimulusRow(stimulusRow);
+      const stimulus = this.parseStimulusRow(stimulusRow)
 
       if (stimulus.identifier) {
-        this.stimulus[stimulus.identifier] = stimulus;
+        this.stimulus[stimulus.identifier] = stimulus
       } else {
-        throw new Error("identifier가 존재하지 않습니다");
+        throw new Error("identifier가 존재하지 않습니다")
       }
     }
   }
 
   parseSequenceRow(row: string): Sequence {
-    const tokens = row.split(" ");
+    const tokens = row.split(" ")
 
     // 토큰 추출
     const [
@@ -260,7 +260,7 @@ class Parser {
       feedback1, // 10 n | => when feedbackType is tf or a
       feedback2, // 11 n | => when feedbackType is tf
       test, // 12 => considered when calculting accuracy
-    ] = tokens;
+    ] = tokens
 
     // Process & pack stimulus
     let sequence: Sequence = {
@@ -276,7 +276,7 @@ class Parser {
           : choices
               .split(",") // ['s1', 's2']
               .map((identifier: string) => {
-                return this.getStimulusByIdentifier(identifier);
+                return this.getStimulusByIdentifier(identifier)
               }),
       // [{type: 'image', body: 'img/2.png', font_color: null, font_size: null}, {...}]
       choiceDuration:
@@ -296,7 +296,7 @@ class Parser {
           ? null
           : +feedbackDuration,
       test: test == "y",
-    };
+    }
 
     switch (feedbackType) {
       case FeedbackType.ALWAYS:
@@ -306,7 +306,7 @@ class Parser {
             feedback1 == "n"
               ? null
               : this.getStimulusByIdentifier(feedback1) || null,
-        };
+        }
       case FeedbackType.TRUE_OR_FALSE:
         sequence = {
           ...sequence,
@@ -318,38 +318,34 @@ class Parser {
             feedback2 == "n"
               ? null
               : this.getStimulusByIdentifier(feedback2) || null,
-        };
-        break;
+        }
+        break
       case FeedbackType.NONE:
       case FeedbackType.CHOICE:
-        break;
+        break
       default:
-        throw new Error(`${feedbackType}은 유효한 Feedback Type이 아닙니다.`);
+        throw new Error(`${feedbackType}은 유효한 Feedback Type이 아닙니다.`)
     }
 
-    return sequence;
+    return sequence
   }
 
   parseSequenceRows(rows: string[]): Sequence[] {
-    let sequences: Sequence[] = [];
+    let sequences: Sequence[] = []
 
     for (let i = 0; i < rows.length; i++) {
-      const sequenceRow: string = rows[i];
-      const sequence = this.parseSequenceRow(sequenceRow);
-      sequences.push(sequence);
+      const sequenceRow: string = rows[i]
+      const sequence = this.parseSequenceRow(sequenceRow)
+      sequences.push(sequence)
     }
 
-    return sequences;
+    return sequences
   }
 
   parseAllSequences() {
-    this.sequences.pre_sequence = this.parseSequenceRows(this.preSequenceRows);
-    this.sequences.main_sequence = this.parseSequenceRows(
-      this.mainSequenceRows
-    );
-    this.sequences.post_sequence = this.parseSequenceRows(
-      this.postSequenceRows
-    );
+    this.sequences.pre_sequence = this.parseSequenceRows(this.preSequenceRows)
+    this.sequences.main_sequence = this.parseSequenceRows(this.mainSequenceRows)
+    this.sequences.post_sequence = this.parseSequenceRows(this.postSequenceRows)
   }
 
   json() {
@@ -357,8 +353,8 @@ class Parser {
       { stimulus: this.stimulus, sequences: this.sequences },
       null,
       " "
-    );
+    )
   }
 }
 
-module.exports = Parser;
+module.exports = Parser

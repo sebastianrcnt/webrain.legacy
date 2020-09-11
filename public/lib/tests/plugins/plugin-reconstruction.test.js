@@ -1,16 +1,16 @@
-const root = '../../';
+const root = "../../"
 
-jest.useFakeTimers();
+jest.useFakeTimers()
 
-describe('reconstruction plugin', function(){
+describe("reconstruction plugin", function () {
+  beforeEach(function () {
+    require(root + "jspsych.js")
+    require(root + "plugins/jspsych-reconstruction.js")
+  })
 
-	beforeEach(function(){
-		require(root + 'jspsych.js');
-		require(root + 'plugins/jspsych-reconstruction.js');
-	});
-
-	test('loads correctly', function(){
-		expect(typeof window.jsPsych.plugins['reconstruction']).not.toBe('undefined');
-	});
-
-});
+  test("loads correctly", function () {
+    expect(typeof window.jsPsych.plugins["reconstruction"]).not.toBe(
+      "undefined"
+    )
+  })
+})

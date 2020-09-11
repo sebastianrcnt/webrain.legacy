@@ -1,8 +1,8 @@
-console.log("global.js loaded");
+console.log("global.js loaded")
 function make(serializedFormArray) {
-  var obj = {};
+  var obj = {}
   for (let inputRow of serializedFormArray) {
-    obj[inputRow.name] = inputRow.value;
+    obj[inputRow.name] = inputRow.value
   }
-  return obj;
+  return obj
 }

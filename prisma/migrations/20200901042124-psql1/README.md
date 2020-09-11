@@ -49,7 +49,7 @@ PRIMARY KEY ("id")
 
 CREATE TABLE "public"."_ExperimentToProject" (
 "A" text   NOT NULL ,
-"B" text   NOT NULL 
+"B" text   NOT NULL
 )
 
 CREATE UNIQUE INDEX "_ExperimentToProject_AB_unique" ON "public"."_ExperimentToProject"("A", "B")
@@ -137,5 +137,3 @@ migration ..20200901042124-psql1
 +  User         User?       @relation(fields: [userEmail], references: [email])
 +}
 ```
-
-
