@@ -5,6 +5,8 @@ const UserControllers = require("../../controllers/users")
 const UsersService = require("../../services/users")
 const respondWithError = require("../../middlewares/error")
 const MainRouter = express.Router()
+const RenderControllers = require("../../controllers/render")
+
 // Routes
 MainRouter.get(
   "/games",
@@ -58,6 +60,7 @@ MainRouter.get(
       .catch(respondWithError(res))
   })
 
+MainRouter.get("/", RenderControllers.render("main/pages/index"))
 MainRouter.all("/", (req, res) => {
   res.redirect("/main/games")
 })
