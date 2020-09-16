@@ -30,6 +30,7 @@ const generalUploader = multer({ dest: "uploads/" })
 const respondWithError = require("../../middlewares/error")
 const { PrismaClient } = require("@prisma/client")
 const ProjectControllers = require("../../controllers/projects")
+const HomeProvider = require("../../providers/home")
 const prisma = new PrismaClient()
 
 // Pages
@@ -238,7 +239,11 @@ AdminRouter.get(
       })
     }
   })
-
+AdminRouter.get(
+  "/edit",
+  HomeProvider,
+  RenderControllers.render("admin/pages/edit-home")
+)
 AdminRouter.all("/", async (req, res) => {
   res.redirect("/admin/projects")
 })

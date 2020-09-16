@@ -78,6 +78,13 @@ ApiRouter.get("/process/disconnect-experiment-to-project", (req, res) => {
   }
 })
 
+ApiRouter.post("/process/edit-home", (req, res) => {
+  const data = unescape(req.body.html).trim()
+  console.log(data)
+  fs.writeFileSync("html/home.html", data, { encoding: "utf-8" })
+  res.status(200).send()
+})
+
 ApiRouter.get("/game/:id", (req, res) => {
   const { id } = req.params
   prisma.result
