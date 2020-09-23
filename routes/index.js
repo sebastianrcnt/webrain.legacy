@@ -11,4 +11,8 @@ router.use("/game", GameRouter)
 router.use("/admin", AdminRouter)
 router.use("/api", ApiRouter)
 
+router.get("/", (req, res) => {
+  res.redirect("/main")
+})
+
 module.exports = router

@@ -1,13 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko">
   <% include ../partials/head %>
-  <link rel="stylesheet" href="/css/initial.css" />
-
   <body>
-    <div class="wrap-all">
-      <% include ../partials/header %>
-      <section class="section section-1"><%- html %></section>
-      <% include ../partials/footer %>
-    </div>
+    <div class="wrap-all"><% include ../partials/header %> <%- html %> <% include ../partials/footer %></div>
   </body>
 </html>
