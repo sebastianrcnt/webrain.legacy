@@ -1,6 +1,0 @@
-node_modules/
-.vscode/
-package-lock.json
-data.db
-uploads/*
-prisma/.env
